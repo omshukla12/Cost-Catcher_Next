@@ -1,0 +1,16 @@
+{
+  "name": "bandit",
+  "version": "1.0.0",
+  "description": "A E-commerce price tracker webapp",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "javascript"
+  ],
+  "author": "Om Shukla",
+  "license": "ISC"
+}
