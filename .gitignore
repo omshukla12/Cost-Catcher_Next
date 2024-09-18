@@ -1,3 +1,7 @@
+/.env 
+/public/temp/.gitkeep
+/package-lock.json
+
 # Logs
 logs
 *.log
