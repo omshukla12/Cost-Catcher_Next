@@ -268,7 +268,7 @@ export function LandingPageComponent() {
                   Monitor Prices
                 </h3>
                 <p className="text-gray-600">
-                  We'll keep an eye on the prices and track their changes over
+                  We will keep an eye on the prices and track their changes over
                   time.
                 </p>
               </div>

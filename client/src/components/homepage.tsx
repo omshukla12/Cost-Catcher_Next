@@ -32,7 +32,7 @@ import Link from "next/link";
 
 export function Homepage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // const [isMenuOpen, setIsMenuOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -427,7 +427,7 @@ export function Homepage() {
                   icon: BarChart2,
                   title: "Monitor Prices",
                   description:
-                    "We'll keep an eye on the prices and track their changes over time.",
+                    "We will keep an eye on the prices and track their changes over time.",
                 },
                 {
                   icon: Bell,

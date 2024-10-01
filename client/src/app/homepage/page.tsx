@@ -427,7 +427,7 @@ export default function HomePage() {
                   icon: BarChart2,
                   title: "Monitor Prices",
                   description:
-                    "We'll keep an eye on the prices and track their changes over time.",
+                    "We will keep an eye on the prices and track their changes over time.",
                 },
                 {
                   icon: Bell,
