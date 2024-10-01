@@ -53,7 +53,7 @@ export default function LandingPage() {
           <nav className="hidden md:flex items-center space-x-8">
             <Link
               className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
-              href="#"
+              href="/features"
             >
               Features
             </Link>
@@ -75,15 +75,19 @@ export default function LandingPage() {
             >
               Contact
             </Link>
-            <Button
-              variant="outline"
-              className="bg-transparent border-gray-300 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors"
-            >
-              Login
-            </Button>
-            <Button className="bg-blue-600 text-white hover:bg-blue-700 transition-colors">
-              Sign Up
-            </Button>
+            <Link href={"/signin"}>
+              <Button
+                variant="outline"
+                className="bg-transparent border-gray-300 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors"
+              >
+                Login
+              </Button>
+            </Link>
+            <Link href={"/signup"}>
+              <Button className="bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+                Sign Up
+              </Button>
+            </Link>
           </nav>
           <Button
             className="md:hidden text-gray-700"
@@ -104,7 +108,7 @@ export default function LandingPage() {
           <nav className="flex flex-col gap-4">
             <Link
               className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
-              href="#"
+              href="/features"
             >
               Features
             </Link>
@@ -126,15 +130,19 @@ export default function LandingPage() {
             >
               Contact
             </Link>
-            <Button
-              variant="outline"
-              className="bg-transparent border-gray-300 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors w-full justify-center"
-            >
-              Login
-            </Button>
-            <Button className="bg-blue-600 text-white hover:bg-blue-700 transition-colors w-full justify-center">
-              Sign Up
-            </Button>
+            <Link href={"/signin"}>
+              <Button
+                variant="outline"
+                className="bg-transparent border-gray-300 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors w-full justify-center"
+              >
+                Login
+              </Button>
+            </Link>
+            <Link href={"/signup"}>
+              <Button className="bg-blue-600 text-white hover:bg-blue-700 transition-colors w-full justify-center">
+                Sign Up
+              </Button>
+            </Link>
           </nav>
         </div>
       )}
@@ -307,7 +315,7 @@ export default function LandingPage() {
                 <li>
                   <Link
                     className="text-sm hover:text-blue-400 transition-colors"
-                    href="#"
+                    href="/"
                   >
                     Home
                   </Link>
@@ -315,7 +323,7 @@ export default function LandingPage() {
                 <li>
                   <Link
                     className="text-sm hover:text-blue-400 transition-colors"
-                    href="#"
+                    href="/features"
                   >
                     Features
                   </Link>

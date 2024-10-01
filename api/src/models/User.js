@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
+require("dotenv").configDotenv();
 
-const MONGODB_URI =
-  "mongodb+srv://anuragd275:FqCC4erlEBNfsx8e@buy-smart-cluster.0ivka.mongodb.net/?retryWrites=true&w=majority&appName=buy-smart-cluster";
+const MONGODB_URI = process.env.MONGODB_URI;
 
 mongoose
   .connect(MONGODB_URI)

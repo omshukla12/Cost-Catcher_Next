@@ -61,14 +61,14 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <header className="sticky top-0 z-50 bg-white shadow-md">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
-              <BarChart2 className="h-8 w-8 text-pink-500" />
+            <Link className="flex items-center justify-center" href="#">
+              <BarChart2 className="h-8 w-8 text-blue-600" />
               <span className="ml-2 text-2xl font-bold text-gray-900">
                 PriceTracker
               </span>
-            </div>
+            </Link>
             <nav className="hidden md:flex items-center space-x-6 flex-grow justify-center">
               {[
                 "All",
@@ -476,7 +476,7 @@ export default function HomePage() {
                 <li>
                   <Link
                     className="text-sm text-gray-400 hover:text-white transition-colors"
-                    href="#"
+                    href="/"
                   >
                     Home
                   </Link>
