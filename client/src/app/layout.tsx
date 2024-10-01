@@ -15,7 +15,7 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "PriceTracker",
-  description: "Welcome to PriceTracker",
+  description: "An e-commerce price tracking web application.",
 };
 
 export default function RootLayout({

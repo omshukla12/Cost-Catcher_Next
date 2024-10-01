@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,8 +30,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-export default function HomePage() {
+export function Homepage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -104,7 +104,7 @@ export default function HomePage() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="hidden md:flex text-black"
+                    className="hidden md:flex"
                   >
                     <User className="h-5 w-5" />
                   </Button>
@@ -116,10 +116,10 @@ export default function HomePage() {
                       <AvatarFallback>JD</AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="text-sm font-medium text-black">
-                        Om Shukla
+                      <p className="text-sm font-medium">John Doe</p>
+                      <p className="text-xs text-gray-500">
+                        john.doe@example.com
                       </p>
-                      <p className="text-xs text-black">TestUI@example.com</p>
                     </div>
                   </div>
                   <DropdownMenuItem>
@@ -150,20 +150,17 @@ export default function HomePage() {
                     <Menu className="h-6 w-6" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent
-                  side="left"
-                  className="w-[300px] sm:w-[400px] bg-white"
-                >
+                <SheetContent side="left" className="w-[300px] sm:w-[400px]">
                   <div className="flex items-center space-x-2 p-4 border-b">
                     <Avatar>
                       <AvatarImage src="/placeholder-avatar.jpg" alt="JD" />
                       <AvatarFallback>JD</AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="text-sm font-medium text-black">
-                        Om Shukla
+                      <p className="text-sm font-medium">John Doe</p>
+                      <p className="text-xs text-gray-500">
+                        john.doe@example.com
                       </p>
-                      <p className="text-xs text-black">testUI@exapmle.com</p>
                     </div>
                   </div>
                   <nav className="flex flex-col space-y-4 mt-4">
@@ -194,7 +191,7 @@ export default function HomePage() {
                       href="#"
                       className="text-gray-600 hover:text-pink-500 transition-colors"
                     >
-                      Kitchen
+                      Home
                     </Link>
                     <Link
                       href="#"
@@ -269,7 +266,7 @@ export default function HomePage() {
 
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-8 text-black">
+            <h2 className="text-3xl font-bold text-center mb-8">
               Trending Products
             </h2>
             <div className="relative">
@@ -341,7 +338,7 @@ export default function HomePage() {
 
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-8 text-black">
+            <h2 className="text-3xl font-bold text-center mb-8">
               Your Tracked Products
             </h2>
             <Tabs defaultValue="all" className="w-full">
@@ -415,10 +412,10 @@ export default function HomePage() {
 
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12 text-black">
+            <h2 className="text-3xl font-bold text-center mb-12">
               How It Works
             </h2>
-            <div className="grid gap-8 md:grid-cols-3 max-w-4xl mx-auto text-black">
+            <div className="grid gap-8 md:grid-cols-3 max-w-4xl mx-auto">
               {[
                 {
                   icon: Search,

@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-export default function LandingPage() {
+export function LandingPageComponent() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -268,7 +268,7 @@ export default function LandingPage() {
                   Monitor Prices
                 </h3>
                 <p className="text-gray-600">
-                  We will keep an eye on the prices and track their changes over
+                  We'll keep an eye on the prices and track their changes over
                   time.
                 </p>
               </div>
@@ -404,7 +404,7 @@ export default function LandingPage() {
             <div className="mt-4 sm:mt-0">
               <Button
                 variant="ghost"
-                className="text-gray-400 hover:text-black transition-colors"
+                className="text-gray-400 hover:text-white transition-colors"
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               >
                 Back to Top

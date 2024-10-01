@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-export default function DeepPurpleSignupPage() {
+export default function UpdatedSignupPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -75,7 +75,7 @@ export default function DeepPurpleSignupPage() {
 
   const inputVariants = {
     focus: {
-      scale: 1.05,
+      scale: 1.02,
       transition: { type: "spring", stiffness: 300, damping: 10 },
     },
     blur: {
@@ -86,7 +86,7 @@ export default function DeepPurpleSignupPage() {
 
   return (
     <motion.div
-      className="min-h-screen bg-gradient-to-br from-pink-500 to-purple-600 flex flex-col justify-center items-center p-4"
+      className="min-h-screen bg-zinc-900 flex flex-col justify-center items-center p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -98,10 +98,10 @@ export default function DeepPurpleSignupPage() {
       >
         <Link
           href="/"
-          className="flex items-center mb-6 transition-transform hover:scale-105"
+          className="flex items-center mb-12 transition-transform hover:scale-105"
         >
-          <BarChart2 className="h-12 w-12 text-white" />
-          <span className="ml-2 text-4xl font-bold text-white">
+          <BarChart2 className="h-12 w-12 text-zinc-200" />
+          <span className="ml-2 text-4xl font-bold text-zinc-200">
             PriceTracker
           </span>
         </Link>
@@ -110,28 +110,29 @@ export default function DeepPurpleSignupPage() {
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        className="w-full max-w-md"
       >
-        <Card className="w-full max-w-md bg-purple-900/90 backdrop-blur-md shadow-2xl border border-purple-500/50">
-          <CardHeader className="text-center">
-            <CardTitle className="text-3xl font-bold mb-2 text-purple-50">
-              Join PriceTracker Elite
+        <Card className="bg-zinc-800 border-zinc-700 shadow-xl">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold text-zinc-200">
+              Create an account
             </CardTitle>
-            <CardDescription className="text-lg text-purple-200">
-              Start saving on your favorite products today
+            <CardDescription className="text-zinc-400">
+              Enter your details below to create your account and start saving
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
             <motion.div
-              className="text-center mb-8"
+              className="text-center mb-6"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-              <p className="text-xl font-semibold mb-2 text-purple-200">
+              <p className="text-lg font-semibold text-zinc-300 mb-2">
                 Members have saved
               </p>
               <motion.div
-                className="text-5xl font-bold text-purple-50 flex items-center justify-center"
+                className="text-4xl font-bold text-zinc-200 flex items-center justify-center"
                 animate={{ scale: [1, 1.1, 1] }}
                 transition={{
                   repeat: Infinity,
@@ -139,105 +140,101 @@ export default function DeepPurpleSignupPage() {
                   ease: "easeInOut",
                 }}
               >
-                <IndianRupee className="h-10 w-10 mr-2" />
-                <span className="tabular-nums">{savings.toLocaleString()}</span>
+                <IndianRupee className="h-8 w-8 mr-2 text-emerald-400" />
+                <span className="tabular-nums text-emerald-400">
+                  {savings.toLocaleString()}
+                </span>
               </motion.div>
             </motion.div>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <motion.div
-                className="space-y-2"
-                variants={inputVariants}
-                whileFocus="focus"
-              >
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <motion.div variants={inputVariants} whileFocus="focus">
                 <Label
                   htmlFor="name"
-                  className="text-lg text-purple-100 flex items-center"
+                  className="text-sm font-medium text-zinc-300"
                 >
-                  <User className="inline-block mr-2 h-5 w-5" />
                   Full Name
                 </Label>
-                <Input
-                  id="name"
-                  placeholder="John Doe"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="text-lg py-3 bg-purple-800/50 border-purple-600/50 text-white placeholder-purple-300"
-                  aria-invalid={errors.name ? "true" : "false"}
-                />
+                <div className="mt-1 relative">
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-500" />
+                  <Input
+                    id="name"
+                    placeholder="John Doe"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="pl-10 bg-zinc-700 border-zinc-600 text-zinc-200 placeholder-zinc-400 focus:ring-emerald-400 focus:border-emerald-400"
+                    aria-invalid={errors.name ? "true" : "false"}
+                  />
+                </div>
                 <AnimatePresence>
                   {errors.name && (
                     <motion.p
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="text-sm text-red-300"
+                      className="text-sm text-red-400 mt-1"
                     >
                       {errors.name}
                     </motion.p>
                   )}
                 </AnimatePresence>
               </motion.div>
-              <motion.div
-                className="space-y-2"
-                variants={inputVariants}
-                whileFocus="focus"
-              >
+              <motion.div variants={inputVariants} whileFocus="focus">
                 <Label
                   htmlFor="email"
-                  className="text-lg text-purple-100 flex items-center"
+                  className="text-sm font-medium text-zinc-300"
                 >
-                  <Mail className="inline-block mr-2 h-5 w-5" />
                   Email Address
                 </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="john@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="text-lg py-3 bg-purple-800/50 border-purple-600/50 text-white placeholder-purple-300"
-                  aria-invalid={errors.email ? "true" : "false"}
-                />
+                <div className="mt-1 relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-500" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="john@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="pl-10 bg-zinc-700 border-zinc-600 text-zinc-200 placeholder-zinc-400 focus:ring-emerald-400 focus:border-emerald-400"
+                    aria-invalid={errors.email ? "true" : "false"}
+                  />
+                </div>
                 <AnimatePresence>
                   {errors.email && (
                     <motion.p
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="text-sm text-red-300"
+                      className="text-sm text-red-400 mt-1"
                     >
                       {errors.email}
                     </motion.p>
                   )}
                 </AnimatePresence>
               </motion.div>
-              <motion.div
-                className="space-y-2"
-                variants={inputVariants}
-                whileFocus="focus"
-              >
+              <motion.div variants={inputVariants} whileFocus="focus">
                 <Label
                   htmlFor="password"
-                  className="text-lg text-purple-100 flex items-center"
+                  className="text-sm font-medium text-zinc-300"
                 >
-                  <Lock className="inline-block mr-2 h-5 w-5" />
                   Password
                 </Label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="text-lg py-3 bg-purple-800/50 border-purple-600/50 text-white placeholder-purple-300"
-                  aria-invalid={errors.password ? "true" : "false"}
-                />
+                <div className="mt-1 relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-500" />
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="pl-10 bg-zinc-700 border-zinc-600 text-zinc-200 placeholder-zinc-400 focus:ring-emerald-400 focus:border-emerald-400"
+                    aria-invalid={errors.password ? "true" : "false"}
+                  />
+                </div>
                 <AnimatePresence>
                   {errors.password && (
                     <motion.p
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="text-sm text-red-300"
+                      className="text-sm text-red-400 mt-1"
                     >
                       {errors.password}
                     </motion.p>
@@ -245,12 +242,12 @@ export default function DeepPurpleSignupPage() {
                 </AnimatePresence>
               </motion.div>
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Button
                   type="submit"
-                  className="w-full mt-8 bg-pink-500 hover:bg-pink-600 text-white text-xl py-6 rounded-md transition-all duration-300 focus:ring-2 focus:ring-pink-300 focus:ring-opacity-50"
+                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-zinc-900 font-semibold py-3 rounded-md transition-all duration-300 focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-50"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -266,8 +263,8 @@ export default function DeepPurpleSignupPage() {
                     </motion.div>
                   ) : (
                     <>
-                      Start Saving Now
-                      <ArrowRight className="ml-2 h-6 w-6" />
+                      Create Account
+                      <ArrowRight className="ml-2 h-5 w-5" />
                     </>
                   )}
                 </Button>
@@ -275,11 +272,11 @@ export default function DeepPurpleSignupPage() {
             </form>
           </CardContent>
           <CardFooter className="justify-center">
-            <p className="text-purple-200">
-              Already a member?{" "}
+            <p className="text-zinc-400">
+              Already have an account?{" "}
               <Link
-                href="/login"
-                className="text-white hover:underline font-semibold"
+                href="/signin"
+                className="text-emerald-400 hover:underline font-semibold"
               >
                 Sign in
               </Link>

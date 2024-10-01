@@ -14,24 +14,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import {
-  BarChart2,
-  ArrowRight,
-  Mail,
-  Lock,
-  IndianRupee,
-  Sparkles,
-  Eye,
-  EyeOff,
-} from "lucide-react";
+import { BarChart2, ArrowRight, Mail, Lock, Sparkles } from "lucide-react";
 import Link from "next/link";
 
-export default function DistinctiveSignInPage() {
+export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,7 +62,7 @@ export default function DistinctiveSignInPage() {
 
   return (
     <motion.div
-      className="min-h-screen bg-gradient-to-br from-indigo-600 to-purple-700 flex flex-col justify-center items-center p-4"
+      className="min-h-screen bg-zinc-900 flex flex-col justify-center items-center p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -84,10 +74,10 @@ export default function DistinctiveSignInPage() {
       >
         <Link
           href="/"
-          className="flex items-center mb-6 transition-transform hover:scale-105"
+          className="flex items-center mb-12 transition-transform hover:scale-105"
         >
-          <BarChart2 className="h-12 w-12 text-white" />
-          <span className="ml-2 text-4xl font-bold text-white">
+          <BarChart2 className="h-12 w-12 text-zinc-200" />
+          <span className="ml-2 text-4xl font-bold text-zinc-200">
             PriceTracker
           </span>
         </Link>
@@ -96,108 +86,68 @@ export default function DistinctiveSignInPage() {
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        className="w-full max-w-md"
       >
-        <Card className="w-full max-w-md bg-white/10 backdrop-blur-md shadow-2xl border border-white/20">
-          <CardHeader className="text-center">
-            <CardTitle className="text-3xl font-bold mb-2 text-white">
-              Welcome Back
+        <Card className="bg-zinc-800 border-zinc-700 shadow-xl">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold text-zinc-200">
+              Sign in to your account
             </CardTitle>
-            <CardDescription className="text-lg text-indigo-200">
-              Sign in to continue your savings journey
+            <CardDescription className="text-zinc-400">
+              Enter your email and password to access your PriceTracker account
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <motion.div
-              className="text-center mb-8"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-            >
-              <p className="text-lg font-semibold mb-2 text-indigo-200">
-                Your savings dashboard awaits
-              </p>
-              <motion.div
-                className="text-4xl font-bold text-white flex items-center justify-center"
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 3,
-                  ease: "easeInOut",
-                }}
-              >
-                <IndianRupee className="h-8 w-8 mr-2 text-indigo-300" />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-pink-400">
-                  PriceTracker
-                </span>
-              </motion.div>
-            </motion.div>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <motion.div
-                className="space-y-2"
-                variants={inputVariants}
-                whileFocus="focus"
-              >
+          <CardContent className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <motion.div variants={inputVariants} whileFocus="focus">
                 <Label
                   htmlFor="email"
-                  className="text-lg text-indigo-100 flex items-center"
+                  className="text-sm font-medium text-zinc-300"
                 >
-                  <Mail className="inline-block mr-2 h-5 w-5" />
                   Email Address
                 </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="john@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="text-lg py-3 bg-white/20 border-white/30 text-white placeholder-indigo-200"
-                  aria-invalid={errors.email ? "true" : "false"}
-                />
+                <div className="mt-1 relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-500" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="john@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="pl-10 bg-zinc-700 border-zinc-600 text-zinc-200 placeholder-zinc-400 focus:ring-emerald-400 focus:border-emerald-400"
+                    aria-invalid={errors.email ? "true" : "false"}
+                  />
+                </div>
                 <AnimatePresence>
                   {errors.email && (
                     <motion.p
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="text-sm text-pink-300"
+                      className="text-sm text-red-400 mt-1"
                     >
                       {errors.email}
                     </motion.p>
                   )}
                 </AnimatePresence>
               </motion.div>
-              <motion.div
-                className="space-y-2"
-                variants={inputVariants}
-                whileFocus="focus"
-              >
+              <motion.div variants={inputVariants} whileFocus="focus">
                 <Label
                   htmlFor="password"
-                  className="text-lg text-indigo-100 flex items-center"
+                  className="text-sm font-medium text-zinc-300"
                 >
-                  <Lock className="inline-block mr-2 h-5 w-5" />
                   Password
                 </Label>
-                <div className="relative">
+                <div className="mt-1 relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-500" />
                   <Input
                     id="password"
-                    type={showPassword ? "text" : "password"}
+                    type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="text-lg py-3 bg-white/20 border-white/30 text-white placeholder-indigo-200 pr-10"
+                    className="pl-10 bg-zinc-700 border-zinc-600 text-zinc-200 placeholder-zinc-400 focus:ring-emerald-400 focus:border-emerald-400"
                     aria-invalid={errors.password ? "true" : "false"}
                   />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-indigo-200 hover:text-white"
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-5 w-5" />
-                    ) : (
-                      <Eye className="h-5 w-5" />
-                    )}
-                  </button>
                 </div>
                 <AnimatePresence>
                   {errors.password && (
@@ -205,20 +155,39 @@ export default function DistinctiveSignInPage() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="text-sm text-pink-300"
+                      className="text-sm text-red-400 mt-1"
                     >
                       {errors.password}
                     </motion.p>
                   )}
                 </AnimatePresence>
               </motion.div>
+              <div className="flex items-center justify-between">
+                <Label
+                  htmlFor="remember"
+                  className="flex items-center space-x-2 cursor-pointer"
+                >
+                  <input
+                    type="checkbox"
+                    id="remember"
+                    className="form-checkbox h-4 w-4 text-emerald-400 rounded border-zinc-600 bg-zinc-700 focus:ring-emerald-400"
+                  />
+                  <span className="text-sm text-zinc-300">Remember me</span>
+                </Label>
+                <Link
+                  href="/forgot-password"
+                  className="text-sm text-emerald-400 hover:underline"
+                >
+                  Forgot password?
+                </Link>
+              </div>
               <motion.div
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
               >
                 <Button
                   type="submit"
-                  className="w-full mt-8 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white text-xl py-6 rounded-md transition-all duration-300 focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50"
+                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-zinc-900 font-semibold py-3 rounded-md transition-all duration-300 focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-50"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -235,29 +204,23 @@ export default function DistinctiveSignInPage() {
                   ) : (
                     <>
                       Sign In
-                      <ArrowRight className="ml-2 h-6 w-6" />
+                      <ArrowRight className="ml-2 h-5 w-5" />
                     </>
                   )}
                 </Button>
               </motion.div>
             </form>
           </CardContent>
-          <CardFooter className="justify-center flex-col space-y-4">
-            <p className="text-indigo-200">
-              New to PriceTracker?{" "}
+          <CardFooter className="justify-center">
+            <p className="text-zinc-400">
+              Don't have an account?{" "}
               <Link
                 href="/signup"
-                className="text-white hover:underline font-semibold"
+                className="text-emerald-400 hover:underline font-semibold"
               >
-                Create an account
+                Sign up
               </Link>
             </p>
-            <Link
-              href="#"
-              className="text-indigo-200 hover:text-white transition-colors"
-            >
-              Forgot your password?
-            </Link>
           </CardFooter>
         </Card>
       </motion.div>
