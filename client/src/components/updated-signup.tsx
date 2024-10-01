@@ -149,7 +149,7 @@ export function UpdatedSignup() {
               <motion.div
                 variants={inputVariants}
                 whileFocus="focus"
-                whileBlur="blur"
+                // whileBlur="blur"
               >
                 <Label
                   htmlFor="name"
@@ -184,7 +184,7 @@ export function UpdatedSignup() {
               <motion.div
                 variants={inputVariants}
                 whileFocus="focus"
-                whileBlur="blur"
+                // whileBlur="blur"
               >
                 <Label
                   htmlFor="email"
@@ -220,7 +220,7 @@ export function UpdatedSignup() {
               <motion.div
                 variants={inputVariants}
                 whileFocus="focus"
-                whileBlur="blur"
+                // whileBlur="blur"
               >
                 <Label
                   htmlFor="password"
