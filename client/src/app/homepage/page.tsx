@@ -461,7 +461,7 @@ export default function HomePage() {
       </main>
 
       <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 md:text-left text-center">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <h3 className="text-lg font-semibold mb-4">About PriceTracker</h3>
@@ -470,7 +470,7 @@ export default function HomePage() {
                 across multiple e-commerce platforms.
               </p>
             </div>
-            <div className="md:text-left text-center">
+            <div>
               <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2">
                 <li>
@@ -484,7 +484,7 @@ export default function HomePage() {
                 <li>
                   <Link
                     className="text-sm text-gray-400 hover:text-white transition-colors"
-                    href="#"
+                    href="/"
                   >
                     How It Works
                   </Link>
@@ -492,7 +492,7 @@ export default function HomePage() {
                 <li>
                   <Link
                     className="text-sm text-gray-400 hover:text-white transition-colors"
-                    href="#"
+                    href="/"
                   >
                     FAQs
                   </Link>
@@ -500,20 +500,20 @@ export default function HomePage() {
                 <li>
                   <Link
                     className="text-sm text-gray-400 hover:text-white transition-colors"
-                    href="#"
+                    href="/"
                   >
                     Contact Us
                   </Link>
                 </li>
               </ul>
             </div>
-            <div className="md:text-left text-center">
+            <div>
               <h3 className="text-lg font-semibold mb-4">Legal</h3>
               <ul className="space-y-2">
                 <li>
                   <Link
                     className="text-sm text-gray-400 hover:text-white transition-colors"
-                    href="#"
+                    href="/"
                   >
                     Privacy Policy
                   </Link>
@@ -521,18 +521,18 @@ export default function HomePage() {
                 <li>
                   <Link
                     className="text-sm text-gray-400 hover:text-white transition-colors"
-                    href="#"
+                    href="/"
                   >
                     Terms of Service
                   </Link>
                 </li>
               </ul>
             </div>
-            <div className="md:text-left text-center">
+            <div>
               <h3 className="text-lg font-semibold mb-4">Connect With Us</h3>
               <div className="flex md:justify-start justify-center space-x-4">
                 <Link
-                  href="#"
+                  href="/"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   <svg

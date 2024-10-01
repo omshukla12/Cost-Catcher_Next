@@ -298,15 +298,14 @@ export default function LandingPage() {
       </main>
       <footer className="bg-gray-900 text-white">
         <div className="container mx-auto px-4 md:px-6 py-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:text-left text-center">
             <div className="space-y-4">
-              <div className="flex items-center">
+              <div className="flex items-center md:justify-start justify-center">
                 <BarChart2 className="h-8 w-8 text-blue-400" />
                 <span className="ml-2 text-2xl font-bold">PriceTracker</span>
               </div>
               <p className="text-sm text-gray-400">
-                Track product prices effortlessly across multiple e-commerce
-                platforms.
+                Track product prices across multiple e-commerce platforms.
               </p>
             </div>
             <div>
@@ -314,15 +313,15 @@ export default function LandingPage() {
               <ul className="space-y-2">
                 <li>
                   <Link
-                    className="text-sm hover:text-blue-400 transition-colors"
-                    href="/"
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                    href="#"
                   >
                     Home
                   </Link>
                 </li>
                 <li>
                   <Link
-                    className="text-sm hover:text-blue-400 transition-colors"
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
                     href="/features"
                   >
                     Features
@@ -330,7 +329,7 @@ export default function LandingPage() {
                 </li>
                 <li>
                   <Link
-                    className="text-sm hover:text-blue-400 transition-colors"
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
                     href="#"
                   >
                     Pricing
@@ -338,7 +337,7 @@ export default function LandingPage() {
                 </li>
                 <li>
                   <Link
-                    className="text-sm hover:text-blue-400 transition-colors"
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
                     href="#"
                   >
                     Blog
@@ -351,7 +350,7 @@ export default function LandingPage() {
               <ul className="space-y-2">
                 <li>
                   <Link
-                    className="text-sm hover:text-blue-400 transition-colors"
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
                     href="#"
                   >
                     Privacy Policy
@@ -359,7 +358,7 @@ export default function LandingPage() {
                 </li>
                 <li>
                   <Link
-                    className="text-sm hover:text-blue-400 transition-colors"
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
                     href="#"
                   >
                     Terms of Service
@@ -367,7 +366,7 @@ export default function LandingPage() {
                 </li>
                 <li>
                   <Link
-                    className="text-sm hover:text-blue-400 transition-colors"
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
                     href="#"
                   >
                     Cookie Policy
@@ -377,7 +376,7 @@ export default function LandingPage() {
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">Connect With Us</h3>
-              <div className="flex space-x-4">
+              <div className="flex md:justify-start justify-center space-x-4">
                 <Link
                   href="#"
                   className="text-gray-400 hover:text-blue-400 transition-colors transform hover:scale-110 duration-200"
