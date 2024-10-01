@@ -40,37 +40,76 @@ export default function DeepPurpleSignupPage() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrors({ name: "", email: "", password: "" });
-    let hasError = false;
+//   const handleSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     setErrors({ name: "", email: "", password: "" });
+//     let hasError = false;
 
-    if (name.trim() === "") {
-      setErrors((prev) => ({ ...prev, name: "Name is required" }));
-      hasError = true;
-    }
-    if (email.trim() === "") {
-      setErrors((prev) => ({ ...prev, email: "Email is required" }));
-      hasError = true;
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      setErrors((prev) => ({ ...prev, email: "Email is invalid" }));
-      hasError = true;
-    }
-    if (password.length < 8) {
-      setErrors((prev) => ({
-        ...prev,
-        password: "Password must be at least 8 characters long",
-      }));
-      hasError = true;
+    // if (name.trim() === "") {
+    //   setErrors((prev) => ({ ...prev, name: "Name is required" }));
+    //   hasError = true;
+    // }
+    // if (email.trim() === "") {
+    //   setErrors((prev) => ({ ...prev, email: "Email is required" }));
+    //   hasError = true;
+    // } else if (!/\S+@\S+\.\S+/.test(email)) {
+    //   setErrors((prev) => ({ ...prev, email: "Email is invalid" }));
+    //   hasError = true;
+    // }
+    // if (password.length < 8) {
+    //   setErrors((prev) => ({
+    //     ...prev,
+    //     password: "Password must be at least 8 characters long",
+    //   }));
+    //   hasError = true;
+    // }
+
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        password: ""
+    })
+
+    console.log(formData);
+
+    function handleChange(event) {
+        setFormData((prevFormData) => {
+            return {
+                ...prevFormData,
+                [event.target.name]: event.target.value
+            }
+        })
+
     }
 
-    if (!hasError) {
-      setIsSubmitting(true);
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log("Form submitted:", { name, email, password });
-      setIsSubmitting(false);
+    async function handleSubmit(e) {
+        e.preventDefault();
+        try {
+            const { data, error } = await supabase.auth.signUp(
+                {
+                    email: formData.email,
+                    password: formData.password,
+                    options: {
+                        data: {
+                            name: formData.name
+                        }
+                    }
+                }
+            )
+            
+            alert("Check email for verification link")
+        } catch (error) {
+            alert(error)
+        } 
     }
+      
+    // if (!hasError) {
+    //   setIsSubmitting(true);
+    //   // Simulate API call
+    //   await new Promise((resolve) => setTimeout(resolve, 2000));
+    //   console.log("Form submitted:", { name, email, password });
+    //   setIsSubmitting(false);
+    // }
   };
 
   const inputVariants = {
@@ -160,7 +199,7 @@ export default function DeepPurpleSignupPage() {
                   id="name"
                   placeholder="John Doe"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange = {handleChange}
                   className="text-lg py-3 bg-purple-800/50 border-purple-600/50 text-white placeholder-purple-300"
                   aria-invalid={errors.name ? "true" : "false"}
                 />
@@ -194,7 +233,7 @@ export default function DeepPurpleSignupPage() {
                   type="email"
                   placeholder="john@example.com"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange = {handleChange}
                   className="text-lg py-3 bg-purple-800/50 border-purple-600/50 text-white placeholder-purple-300"
                   aria-invalid={errors.email ? "true" : "false"}
                 />
@@ -227,7 +266,7 @@ export default function DeepPurpleSignupPage() {
                   id="password"
                   type="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange = {handleChange}
                   className="text-lg py-3 bg-purple-800/50 border-purple-600/50 text-white placeholder-purple-300"
                   aria-invalid={errors.password ? "true" : "false"}
                 />
