@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { supabase } from '../client'; // Adjust the path as needed
+import { supabase } from '../utils/supabaseClient'; // Adjust the path as needed
 
 export default function Signin({ setToken }) {
   const router = useRouter();
