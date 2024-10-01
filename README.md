@@ -1,3 +1,3 @@
-# Cost-catcher
+# Price Tracker
 
-A E-commerce price tracker webapp 
+This is an **E-Commerce** price tracker web application.
