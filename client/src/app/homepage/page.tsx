@@ -27,14 +27,14 @@ import {
   User,
   Settings,
   ShoppingBag,
-  ArrowUp,
+  ChevronUp,
 } from "lucide-react";
 import Link from "next/link";
 
 export default function HomePage() {
-  const [showScrollTop, setShowScrollTop] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -540,7 +540,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <h3 className="text-lg font-semibold mb-4">About PriceTracker</h3>
-              <p className="text-sm text-zinc-400">
+              <p className="text-sm text-zinc-400 md:mr-4">
                 PriceTracker helps you save money by tracking product prices
                 across multiple e-commerce platforms.
               </p>
@@ -664,23 +664,14 @@ export default function HomePage() {
         </div>
       </footer>
 
-      <AnimatePresence>
-        {showScrollTop && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.2 }}
-          >
-            <Button
-              className="fixed bottom-4 right-4 bg-emerald-500 text-zinc-900 rounded-full p-2 shadow-lg hover:bg-emerald-600 transition-all duration-300"
-              onClick={scrollToTop}
-            >
-              <ArrowUp className="h-6 w-6" />
-            </Button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {showScrollTop && (
+        <Button
+          className="fixed bottom-4 right-4 bg-emerald-500 text-zinc-900 rounded-full p-2 shadow-lg hover:bg-emerald-600  transition-all duration-300 animate-bounce"
+          onClick={scrollToTop}
+        >
+          <ChevronUp className="h-6 w-6" />
+        </Button>
+      )}
     </div>
   );
 }
