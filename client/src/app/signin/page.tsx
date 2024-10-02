@@ -16,12 +16,15 @@ import {
 import { Label } from "@/components/ui/label";
 import { BarChart2, ArrowRight, Mail, Lock, Sparkles } from "lucide-react";
 import Link from "next/link";
+import { signIn } from "@/lib/auth";
+import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,10 +45,23 @@ export default function SignInPage() {
 
     if (!hasError) {
       setIsSubmitting(true);
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log("Form submitted:", { email, password });
-      setIsSubmitting(false);
+      try {
+        const { data, error } = await signIn(email, password);
+        if (error) {
+          setErrors((prev) => ({ ...prev, email: error.message }));
+        } else {
+          console.log("User signed in:", data);
+          router.push("/homepage");
+        }
+      } catch (error) {
+        console.error("Signin error:", error);
+        setErrors((prev) => ({
+          ...prev,
+          email: "An error occurred during signin",
+        }));
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 

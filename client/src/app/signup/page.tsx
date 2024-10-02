@@ -24,6 +24,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import Link from "next/link";
+import { signUp } from "@/lib/auth";
+import { useRouter } from "next/navigation";
 
 export default function UpdatedSignupPage() {
   const [name, setName] = useState("");
@@ -32,6 +34,7 @@ export default function UpdatedSignupPage() {
   const [errors, setErrors] = useState({ name: "", email: "", password: "" });
   const [savings, setSavings] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -66,10 +69,23 @@ export default function UpdatedSignupPage() {
 
     if (!hasError) {
       setIsSubmitting(true);
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log("Form submitted:", { name, email, password });
-      setIsSubmitting(false);
+      try {
+        const { data, error } = await signUp(email, password);
+        if (error) {
+          setErrors((prev) => ({ ...prev, email: error.message }));
+        } else {
+          console.log("User signed up:", data);
+          router.push("/homepage");
+        }
+      } catch (error) {
+        console.error("Signup error:", error);
+        setErrors((prev) => ({
+          ...prev,
+          email: "An error occurred during signup",
+        }));
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
