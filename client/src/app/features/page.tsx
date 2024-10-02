@@ -1,5 +1,7 @@
 "use client";
 
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -26,6 +28,8 @@ import {
 import Link from "next/link";
 
 export default function FeaturesPage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const features = [
     {
       icon: Search,
@@ -75,38 +79,43 @@ export default function FeaturesPage() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-white">
-      <header className="sticky top-0 z-50 bg-white shadow-md">
+    <div className="flex flex-col min-h-screen bg-zinc-900 text-zinc-200">
+      <motion.header
+        className="sticky top-0 z-50 bg-zinc-800 shadow-md"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      >
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center">
-              <BarChart2 className="h-8 w-8 text-pink-500" />
-              <span className="ml-2 text-2xl font-bold text-gray-900">
+              <BarChart2 className="h-8 w-8 text-emerald-400" />
+              <span className="ml-2 text-2xl font-bold text-zinc-200">
                 PriceTracker
               </span>
             </Link>
             <nav className="hidden md:flex items-center space-x-6 flex-1 justify-center">
               <Link
                 href="/"
-                className="text-gray-600 hover:text-pink-500 transition-colors"
+                className="text-zinc-400 hover:text-emerald-400 transition-colors"
               >
                 Home
               </Link>
               <Link
                 href="/features"
-                className="text-gray-600 hover:text-pink-500 transition-colors"
+                className="text-zinc-400 hover:text-emerald-400 transition-colors"
               >
                 Features
               </Link>
               <Link
                 href="/pricing"
-                className="text-gray-600 hover:text-pink-500 transition-colors"
+                className="text-zinc-400 hover:text-emerald-400 transition-colors"
               >
                 Pricing
               </Link>
               <Link
                 href="/about"
-                className="text-gray-600 hover:text-pink-500 transition-colors"
+                className="text-zinc-400 hover:text-emerald-400 transition-colors"
               >
                 About
               </Link>
@@ -114,64 +123,67 @@ export default function FeaturesPage() {
             <div className="flex items-center space-x-4">
               <div className="relative hidden md:block">
                 <Input
-                  className="w-64 pl-10 pr-4 py-2 rounded-full bg-gray-100 focus:bg-white transition-colors"
+                  className="w-64 pl-10 pr-4 py-2 rounded-full bg-zinc-700 text-zinc-200 placeholder-zinc-400 border-zinc-600 focus:border-emerald-400 focus:ring-emerald-400"
                   placeholder="Search products..."
                   type="search"
                 />
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-400" />
               </div>
               <Button
                 asChild
                 variant="outline"
-                className="hidden md:flex text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200 hover:border-red-300 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+                className="hidden md:flex text-emerald-400 hover:text-emerald-300 hover:bg-zinc-700 border-zinc-600 hover:border-emerald-400 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
               >
                 <Link href="/signin">
                   <LogIn className="mr-2 h-5 w-5" />
                   Sign In
                 </Link>
               </Button>
-              <Sheet>
+              <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="icon" className="md:hidden">
-                    <Menu className="h-6 w-6" />
+                    <Menu className="h-6 w-6 text-zinc-200" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="w-[300px] sm:w-[400px]">
+                <SheetContent
+                  side="left"
+                  className="w-[300px] sm:w-[400px] bg-zinc-800 border-r-zinc-700"
+                >
                   <nav className="flex flex-col space-y-4">
                     <Input
-                      className="w-full"
+                      className="w-full bg-zinc-700 text-zinc-200 placeholder-zinc-400 border-zinc-600 focus:border-emerald-400 focus:ring-emerald-400"
                       placeholder="Search products..."
                       type="search"
                     />
                     <Link
                       href="/"
-                      className="text-gray-600 hover:text-pink-500 transition-colors"
+                      className="text-zinc-200 hover:text-emerald-400 transition-colors"
                     >
                       Home
                     </Link>
                     <Link
                       href="/features"
-                      className="text-gray-600 hover:text-pink-500 transition-colors"
+                      className="text-zinc-200 hover:text-emerald-400 transition-colors"
                     >
                       Features
                     </Link>
                     <Link
                       href="/pricing"
-                      className="text-gray-600 hover:text-pink-500 transition-colors"
+                      className="text-zinc-200 hover:text-emerald-400 transition-colors"
                     >
                       Pricing
                     </Link>
                     <Link
                       href="/about"
-                      className="text-gray-600 hover:text-pink-500 transition-colors"
+                      className="text-zinc-200 hover:text-emerald-400 transition-colors"
                     >
                       About
                     </Link>
-                    <hr className="my-4" />
+                    <hr className="my-4 border-zinc-700" />
                     <Button
                       asChild
                       variant="outline"
-                      className="justify-start text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200 hover:border-red-300 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+                      className="justify-start text-emerald-400 hover:text-emerald-300 hover:bg-zinc-700 border-zinc-600 hover:border-emerald-400 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
                     >
                       <Link href="/signin">
                         <LogIn className="mr-2 h-5 w-5" />
@@ -184,50 +196,79 @@ export default function FeaturesPage() {
             </div>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       <main className="flex-grow">
-        <section className="bg-gradient-to-r from-pink-500 to-purple-600 py-20 text-white">
+        <motion.section
+          className="bg-gradient-to-r from-emerald-600 to-emerald-800 py-20 text-zinc-200"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <motion.h1
+              className="text-4xl md:text-5xl font-bold mb-6"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
               PriceTracker Features
-            </h1>
-            <p className="text-xl mb-8 max-w-2xl mx-auto">
+            </motion.h1>
+            <motion.p
+              className="text-xl mb-8 max-w-2xl mx-auto"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+            >
               Discover how PriceTracker helps you save money and make smarter
               shopping decisions.
-            </p>
-            <Button
-              asChild
-              size="lg"
-              className="bg-white text-pink-600 hover:bg-pink-100 transition-colors"
+            </motion.p>
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
             >
-              <Link href="/signup">Start Tracking Prices</Link>
-            </Button>
+              <Button
+                asChild
+                size="lg"
+                className="bg-zinc-200 text-emerald-600 hover:bg-zinc-300 transition-colors"
+              >
+                <Link href="/signup">Start Tracking Prices</Link>
+              </Button>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
 
         <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {features.map((feature, index) => (
-                <Card
+                <motion.div
                   key={index}
-                  className="transition-all duration-300 hover:shadow-lg"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
                 >
-                  <CardHeader>
-                    <feature.icon className="h-10 w-10 text-pink-500 mb-4" />
-                    <CardTitle>{feature.title}</CardTitle>
-                    <CardDescription>{feature.description}</CardDescription>
-                  </CardHeader>
-                </Card>
+                  <Card className="bg-zinc-800 border-zinc-700 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10">
+                    <CardHeader>
+                      <feature.icon className="h-10 w-10 text-emerald-400 mb-4" />
+                      <CardTitle className="text-zinc-200">
+                        {feature.title}
+                      </CardTitle>
+                      <CardDescription className="text-zinc-400">
+                        {feature.description}
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="bg-gray-50 py-16">
+        <section className="bg-zinc-800 py-16">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">
+            <h2 className="text-3xl font-bold text-center mb-12 text-zinc-200">
               How PriceTracker Works
             </h2>
             <div className="grid gap-8 md:grid-cols-3 max-w-4xl mx-auto">
@@ -251,23 +292,26 @@ export default function FeaturesPage() {
                     "Receive instant notifications when prices drop or reach your desired level.",
                 },
               ].map((item, index) => (
-                <Card key={index} className="text-center">
-                  <CardContent className="pt-6">
-                    <div
-                      className={`bg-${
-                        index === 0 ? "pink" : index === 1 ? "purple" : "blue"
-                      }-100 p-4 rounded-full inline-block mb-4`}
-                    >
-                      <item.icon
-                        className={`h-8 w-8 text-${
-                          index === 0 ? "pink" : index === 1 ? "purple" : "blue"
-                        }-600`}
-                      />
-                    </div>
-                    <CardTitle className="mb-2">{item.title}</CardTitle>
-                    <CardDescription>{item.description}</CardDescription>
-                  </CardContent>
-                </Card>
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.2 }}
+                >
+                  <Card className="bg-zinc-700 border-zinc-600 text-center">
+                    <CardContent className="pt-6">
+                      <div className="bg-emerald-500 p-4 rounded-full inline-block mb-4">
+                        <item.icon className="h-8 w-8 text-zinc-900" />
+                      </div>
+                      <CardTitle className="mb-2 text-zinc-200">
+                        {item.title}
+                      </CardTitle>
+                      <CardDescription className="text-zinc-400">
+                        {item.description}
+                      </CardDescription>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -275,15 +319,17 @@ export default function FeaturesPage() {
 
         <section className="py-16">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-8">Start Saving Today</h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold mb-8 text-zinc-200">
+              Start Saving Today
+            </h2>
+            <p className="text-xl mb-8 max-w-2xl mx-auto text-zinc-400">
               Join thousands of smart shoppers who are already saving money with
               PriceTracker.
             </p>
             <Button
               asChild
               size="lg"
-              className="bg-pink-500 text-white hover:bg-pink-600 transition-colors"
+              className="bg-emerald-500 text-zinc-900 hover:bg-emerald-600 transition-colors"
             >
               <Link href="/signup">Create Your Free Account</Link>
             </Button>
@@ -291,7 +337,7 @@ export default function FeaturesPage() {
         </section>
       </main>
 
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-zinc-800 text-zinc-200 py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div>
@@ -300,7 +346,7 @@ export default function FeaturesPage() {
                 <li>
                   <Link
                     href="/features"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-zinc-400 hover:text-emerald-400 transition-colors"
                   >
                     Features
                   </Link>
@@ -308,7 +354,7 @@ export default function FeaturesPage() {
                 <li>
                   <Link
                     href="/pricing"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-zinc-400 hover:text-emerald-400 transition-colors"
                   >
                     Pricing
                   </Link>
@@ -316,7 +362,7 @@ export default function FeaturesPage() {
                 <li>
                   <Link
                     href="/faq"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-zinc-400 hover:text-emerald-400 transition-colors"
                   >
                     FAQ
                   </Link>
@@ -329,7 +375,7 @@ export default function FeaturesPage() {
                 <li>
                   <Link
                     href="/about"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-zinc-400 hover:text-emerald-400 transition-colors"
                   >
                     About Us
                   </Link>
@@ -337,7 +383,7 @@ export default function FeaturesPage() {
                 <li>
                   <Link
                     href="/blog"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-zinc-400 hover:text-emerald-400 transition-colors"
                   >
                     Blog
                   </Link>
@@ -345,7 +391,7 @@ export default function FeaturesPage() {
                 <li>
                   <Link
                     href="/careers"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-zinc-400 hover:text-emerald-400 transition-colors"
                   >
                     Careers
                   </Link>
@@ -358,7 +404,7 @@ export default function FeaturesPage() {
                 <li>
                   <Link
                     href="/privacy"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-zinc-400 hover:text-emerald-400 transition-colors"
                   >
                     Privacy Policy
                   </Link>
@@ -366,7 +412,7 @@ export default function FeaturesPage() {
                 <li>
                   <Link
                     href="/terms"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-zinc-400 hover:text-emerald-400 transition-colors"
                   >
                     Terms of Service
                   </Link>
@@ -379,7 +425,7 @@ export default function FeaturesPage() {
                 <li>
                   <Link
                     href="/contact"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-zinc-400 hover:text-emerald-400 transition-colors"
                   >
                     Contact Us
                   </Link>
@@ -387,7 +433,7 @@ export default function FeaturesPage() {
                 <li>
                   <Link
                     href="https://twitter.com/pricetracker"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-zinc-400 hover:text-emerald-400 transition-colors"
                   >
                     Twitter
                   </Link>
@@ -395,7 +441,7 @@ export default function FeaturesPage() {
                 <li>
                   <Link
                     href="https://facebook.com/pricetracker"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-zinc-400 hover:text-emerald-400 transition-colors"
                   >
                     Facebook
                   </Link>
@@ -403,8 +449,8 @@ export default function FeaturesPage() {
               </ul>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t border-gray-800 text-center">
-            <p className="text-sm text-gray-400">
+          <div className="mt-8 pt-8 border-t border-zinc-700 text-center">
+            <p className="text-sm text-zinc-400">
               © {new Date().getFullYear()} PriceTracker. All rights reserved.
             </p>
           </div>
