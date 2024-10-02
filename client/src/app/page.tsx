@@ -16,10 +16,6 @@ import {
   Zap,
   Shield,
   Clock,
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
   ChevronUp,
 } from "lucide-react";
 
