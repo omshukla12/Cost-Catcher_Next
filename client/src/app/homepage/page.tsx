@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -29,7 +31,7 @@ import {
   ShoppingBag,
   ChevronUp,
 } from "lucide-react";
-import Link from "next/link";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -115,6 +117,7 @@ export default function HomePage() {
                     <User className="h-5 w-5 text-zinc-200" />
                   </Button>
                 </DropdownMenuTrigger>
+                <ThemeToggle />
                 <DropdownMenuContent
                   align="end"
                   className="w-56 bg-zinc-800 border-zinc-700"

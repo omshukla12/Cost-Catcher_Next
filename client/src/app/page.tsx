@@ -1,11 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
 import {
   ArrowRight,
   BarChart2,
@@ -18,6 +19,7 @@ import {
   Clock,
   ChevronUp,
 } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -89,6 +91,7 @@ export default function LandingPage() {
                 Sign Up
               </Button>
             </Link>
+            <ThemeToggle />
           </nav>
           <Button
             className="md:hidden text-zinc-200"

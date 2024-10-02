@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -26,7 +28,7 @@ import {
   LogIn,
   ChevronUp,
 } from "lucide-react";
-import Link from "next/link";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function FeaturesPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -208,6 +210,7 @@ export default function FeaturesPage() {
                   </nav>
                 </SheetContent>
               </Sheet>
+              <ThemeToggle />
             </div>
           </div>
         </div>
