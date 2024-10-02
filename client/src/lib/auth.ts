@@ -1,4 +1,5 @@
 import { supabase } from "./supabase";
+import { Session, AuthChangeEvent } from "@supabase/supabase-js";
 
 export async function signUp(email: string, password: string) {
   const { data, error } = await supabase.auth.signUp({
@@ -26,7 +27,7 @@ export function getCurrentUser() {
 }
 
 export function onAuthStateChange(
-  callback: (event: string, session: any) => void
+  callback: (event: string, session: Session | null) => void
 ) {
   return supabase.auth.onAuthStateChange(callback);
 }
