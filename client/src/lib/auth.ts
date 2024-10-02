@@ -27,7 +27,7 @@ export function getCurrentUser() {
 }
 
 export function onAuthStateChange(
-  callback: (event: string, session: Session | null) => void
+  callback: (event: AuthChangeEvent, session: Session | null) => void
 ) {
   return supabase.auth.onAuthStateChange(callback);
 }
