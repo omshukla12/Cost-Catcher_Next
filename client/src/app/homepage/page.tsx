@@ -71,7 +71,7 @@ export default function HomePage() {
       >
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-16">
-            <Link className="flex items-center justify-center" href="#">
+            <Link className="flex items-center justify-center" href="/">
               <BarChart2 className="h-8 w-8 text-emerald-400" />
               <span className="ml-2 text-2xl font-bold text-zinc-200">
                 PriceTracker
@@ -538,12 +538,23 @@ export default function HomePage() {
         </section>
       </main>
 
-      <footer className="bg-zinc-800 text-zinc-200 py-12">
+      <footer className="dark:bg-zinc-800 dark:text-zinc-200 py-12 bg-gray-900 text-white">
         <div className="container mx-auto px-4 md:text-left text-center">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold mb-4">About PriceTracker</h3>
-              <p className="text-sm text-zinc-400 md:mr-4">
+            <div className="space-y-4">
+              <Link
+                className="flex items-center md:justify-start justify-center"
+                href="#"
+              >
+                <BarChart2
+                  className="h-8 w-8 text-blue-600 dark:text-emerald-400"
+                  aria-hidden="true"
+                />
+                <span className="ml-2 text-2xl font-bold text-white dark:text-zinc-200">
+                  PriceTracker
+                </span>
+              </Link>
+              <p className="text-sm dark:text-zinc-400 text-gray-400 md:mr-4">
                 PriceTracker helps you save money by tracking product prices
                 across multiple e-commerce platforms.
               </p>
@@ -553,7 +564,7 @@ export default function HomePage() {
               <ul className="space-y-2">
                 <li>
                   <Link
-                    className="text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     Home
@@ -561,7 +572,7 @@ export default function HomePage() {
                 </li>
                 <li>
                   <Link
-                    className="text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     How It Works
@@ -569,7 +580,7 @@ export default function HomePage() {
                 </li>
                 <li>
                   <Link
-                    className="text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     FAQs
@@ -577,7 +588,7 @@ export default function HomePage() {
                 </li>
                 <li>
                   <Link
-                    className="text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     Contact Us
@@ -590,7 +601,7 @@ export default function HomePage() {
               <ul className="space-y-2">
                 <li>
                   <Link
-                    className="text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     Privacy Policy
@@ -598,7 +609,7 @@ export default function HomePage() {
                 </li>
                 <li>
                   <Link
-                    className="text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     Terms of Service
@@ -611,7 +622,8 @@ export default function HomePage() {
               <div className="flex md:justify-start justify-center space-x-4">
                 <Link
                   href="/"
-                  className="text-zinc-400 hover:text-emerald-400 transition-colors"
+                  className="text-gray-400 hover:text-blue-400 dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
+                  aria-label="Facebook"
                 >
                   <svg
                     className="h-6 w-6"
@@ -628,7 +640,8 @@ export default function HomePage() {
                 </Link>
                 <Link
                   href="#"
-                  className="text-zinc-400 hover:text-emerald-400 transition-colors"
+                  className="text-gray-400 hover:text-blue-400 dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
+                  aria-label="Twitter"
                 >
                   <svg
                     className="h-6 w-6"
@@ -641,7 +654,8 @@ export default function HomePage() {
                 </Link>
                 <Link
                   href="#"
-                  className="text-zinc-400 hover:text-emerald-400 transition-colors"
+                  className="text-gray-400 hover:text-blue-400 dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
+                  aria-label="Instagram"
                 >
                   <svg
                     className="h-6 w-6"
@@ -659,8 +673,8 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t border-zinc-700 text-center">
-            <p className="text-sm text-zinc-400">
+          <div className="mt-8 pt-8 border-t border-gray-800 dark:border-zinc-700 text-center">
+            <p className="text-sm dark:text-zinc-400 text-gray-400">
               © {new Date().getFullYear()} PriceTracker. All rights reserved.
             </p>
           </div>
@@ -669,10 +683,11 @@ export default function HomePage() {
 
       {showScrollTop && (
         <Button
-          className="fixed bottom-4 right-4 bg-emerald-500 text-zinc-900 rounded-full p-2 shadow-lg hover:bg-emerald-600  transition-all duration-300 animate-bounce"
+          className="fixed bottom-4 right-4 bg-blue-600 text-white dark:bg-emerald-500 dark:text-zinc-900 rounded-full p-2 shadow-lg dark:hover:bg-emerald-600 hover:bg-blue-700 transition-all duration-300 animate-bounce"
           onClick={scrollToTop}
+          aria-label="Scroll to top"
         >
-          <ChevronUp className="h-6 w-6" />
+          <ChevronUp className="h-6 w-6" aria-hidden="true" />
         </Button>
       )}
     </div>

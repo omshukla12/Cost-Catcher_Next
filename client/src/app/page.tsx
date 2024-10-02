@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
@@ -24,13 +24,23 @@ import { ThemeToggle } from "@/components/theme-toggle";
 export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 300);
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY.current) {
+        setShowNavbar(false);
+      } else {
+        setShowNavbar(true);
+      }
+      setShowScrollTop(currentScrollY > 300);
+      lastScrollY.current = currentScrollY;
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -39,41 +49,41 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-zinc-900 text-zinc-200">
+    <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-zinc-900 text-zinc-200">
       <motion.header
-        className="fixed top-0 left-0 right-0 z-50 bg-zinc-800 shadow-md"
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
+        className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-zinc-800 shadow-md"
+        initial={{ y: 0 }}
+        animate={{ y: showNavbar ? 0 : "-100%" }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
       >
         <div className="container mx-auto px-4 lg:px-6 h-16 flex items-center justify-between">
           <Link className="flex items-center justify-center" href="#">
-            <BarChart2 className="h-8 w-8 text-emerald-400" />
-            <span className="ml-2 text-2xl font-bold text-zinc-200">
+            <BarChart2 className="h-8 w-8 text-blue-600 dark:text-emerald-400" />
+            <span className="ml-2 text-2xl font-bold text-gray-900 dark:text-zinc-200">
               PriceTracker
             </span>
           </Link>
           <nav className="hidden md:flex items-center space-x-8">
             <Link
-              className="text-sm font-medium text-zinc-400 hover:text-emerald-400 transition-colors"
+              className="text-sm font-medium text-gray-700 hover:text-blue-600  dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
               href="/features"
             >
               Features
             </Link>
             <Link
-              className="text-sm font-medium text-zinc-400 hover:text-emerald-400 transition-colors"
-              href="#"
+              className="text-sm font-medium text-gray-700 hover:text-blue-600  dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
+              href="/pricing"
             >
               Pricing
             </Link>
             <Link
-              className="text-sm font-medium text-zinc-400 hover:text-emerald-400 transition-colors"
+              className="text-sm font-medium text-gray-700 hover:text-blue-600  dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
               href="#"
             >
               Blog
             </Link>
             <Link
-              className="text-sm font-medium text-zinc-400 hover:text-emerald-400 transition-colors"
+              className="text-sm font-medium text-gray-700 hover:text-blue-600  dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
               href="#"
             >
               Contact
@@ -81,28 +91,29 @@ export default function LandingPage() {
             <Link href="/signin">
               <Button
                 variant="outline"
-                className="bg-transparent border-zinc-600 text-zinc-200 hover:bg-zinc-700 hover:text-emerald-400 transition-colors"
+                className="bg-transparent border-gray-300 text-gray-700 hover:bg-gray-100 hover:text-blue-600 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-700 dark:hover:text-emerald-400 transition-colors"
               >
                 Login
               </Button>
             </Link>
             <Link href="/signup">
-              <Button className="bg-emerald-500 text-zinc-900 hover:bg-emerald-600 transition-colors">
+              <Button className="dark:bg-emerald-500 dark:text-zinc-900 dark:hover:bg-emerald-600 bg-blue-600 text-white hover:bg-blue-700 transition-colors">
                 Sign Up
               </Button>
             </Link>
             <ThemeToggle />
           </nav>
           <Button
-            className="md:hidden text-zinc-200"
+            className="md:hidden text-gray-700 dark:text-zinc-200"
             variant="ghost"
             size="icon"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
+            <span className="sr-only">Toggle menu</span>
             {isMenuOpen ? (
-              <X className="h-6 w-6" />
+              <X className="h-6 w-6" aria-hidden="true" />
             ) : (
-              <Menu className="h-6 w-6" />
+              <Menu className="h-6 w-6" aria-hidden="true" />
             )}
           </Button>
         </div>
@@ -113,29 +124,29 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="md:hidden bg-zinc-800 p-4 fixed top-16 right-0 left-0 z-40 border-b border-zinc-700 shadow-lg"
+            className="md:hidden bg-white dark:bg-zinc-800 p-4 fixed top-16 right-0 left-0 z-40 border-b border-gray-200 dark:border-zinc-700 shadow-lg"
           >
             <nav className="flex flex-col gap-4">
               <Link
-                className="text-sm font-medium text-zinc-400 hover:text-emerald-400 transition-colors"
+                className="text-sm font-medium text-gray-700 hover:text-blue-600  dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
                 href="/features"
               >
                 Features
               </Link>
               <Link
-                className="text-sm font-medium text-zinc-400 hover:text-emerald-400 transition-colors"
-                href="#"
+                className="text-sm font-medium text-gray-700 hover:text-blue-600  dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
+                href="/pricing"
               >
                 Pricing
               </Link>
               <Link
-                className="text-sm font-medium text-zinc-400 hover:text-emerald-400 transition-colors"
+                className="text-sm font-medium text-gray-700 hover:text-blue-600  dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
                 href="#"
               >
                 Blog
               </Link>
               <Link
-                className="text-sm font-medium text-zinc-400 hover:text-emerald-400 transition-colors"
+                className="text-sm font-medium text-gray-700 hover:text-blue-600  dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
                 href="#"
               >
                 Contact
@@ -143,13 +154,13 @@ export default function LandingPage() {
               <Link href="/signin">
                 <Button
                   variant="outline"
-                  className="bg-transparent border-zinc-600 text-zinc-200 hover:bg-zinc-700 hover:text-emerald-400 transition-colors w-full justify-center"
+                  className="bg-transparent border-gray-300 text-gray-700 hover:bg-gray-100 hover:text-blue-600 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-700 dark:hover:text-emerald-400 transition-colors w-full justify-center"
                 >
                   Login
                 </Button>
               </Link>
               <Link href="/signup">
-                <Button className="bg-emerald-500 text-zinc-900 hover:bg-emerald-600 transition-colors w-full justify-center">
+                <Button className="border-gray-300 text-gray-700 hover:bg-gray-100 hover:text-blue-600 dark:bg-emerald-500 dark:text-zinc-900 dark:hover:bg-emerald-600 transition-colors w-full justify-center">
                   Sign Up
                 </Button>
               </Link>
@@ -159,7 +170,7 @@ export default function LandingPage() {
       </AnimatePresence>
       <main className="flex-1 pt-16">
         <motion.section
-          className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-zinc-800 to-zinc-900"
+          className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 dark:from-zinc-800 dark:to-zinc-900"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
@@ -172,10 +183,10 @@ export default function LandingPage() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
               >
-                <h1 className="text-4xl font-extrabold tracking-tighter text-zinc-200 sm:text-5xl md:text-6xl lg:text-7xl">
+                <h1 className="text-4xl font-extrabold tracking-tighter text-white dark:text-zinc-200 sm:text-5xl md:text-6xl lg:text-7xl">
                   Track Product Prices Effortlessly
                 </h1>
-                <p className="mx-auto max-w-[700px] text-xl text-zinc-400 md:text-2xl">
+                <p className="mx-auto max-w-[700px] text-xl text-blue-100 dark:text-zinc-400 md:text-2xl">
                   Never miss a deal again. Monitor prices across multiple
                   e-commerce sites and get notified when prices drop.
                 </p>
@@ -189,21 +200,25 @@ export default function LandingPage() {
                 <form className="flex space-x-2">
                   <div className="relative flex-1">
                     <Input
-                      className="w-full pl-10 pr-4 py-3 rounded-md bg-zinc-700 text-zinc-200 placeholder-zinc-400 border-zinc-600 focus:border-emerald-400 focus:ring-emerald-400"
+                      className="w-full pl-10 pr-4 py-3 rounded-md bg-white/20 focus:bg-white backdrop-blur-md text-purple-600 placeholder-blue-400 border-white/20 focus:border-white focus:ring-2 focus:ring-white dark:bg-zinc-700 dark:text-zinc-200 dark:placeholder-zinc-100 dark:border-zinc-600 dark:focus:border-emerald-400 dark:focus:ring-emerald-400"
                       placeholder="Enter product URL"
                       type="url"
+                      aria-label="Product URL"
                     />
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-400" />
+                    <Search
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-400"
+                      aria-hidden="true"
+                    />
                   </div>
                   <Button
                     type="submit"
-                    className="bg-emerald-500 text-zinc-900 hover:bg-emerald-600 transition-colors rounded-md px-6"
+                    className="bg-white text-blue-600 hover:bg-blue-50 dark:bg-emerald-500 dark:text-zinc-900 dark:hover:bg-emerald-600 transition-colors rounded-md px-6"
                   >
                     Track
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                   </Button>
                 </form>
-                <p className="text-sm text-zinc-400">
+                <p className="text-sm text-blue-100 dark:text-zinc-400">
                   Start tracking your first product for free. No credit card
                   required.
                 </p>
@@ -214,12 +229,12 @@ export default function LandingPage() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.5 }}
               >
-                <Button className="bg-emerald-500 text-zinc-900 hover:bg-emerald-600 transition-all duration-300 transform hover:scale-105 text-lg px-8 py-3 rounded-md shadow-lg hover:shadow-xl">
+                <Button className="bg-white text-blue-600 hover:text-blue-800 hover:bg-blue-50 dark:bg-emerald-500 dark:text-zinc-900 dark:hover:bg-emerald-600 transition-all duration-300 transform hover:scale-105 text-lg px-8 py-3 rounded-md shadow-lg hover:shadow-xl">
                   Start for free
                 </Button>
                 <Button
                   variant="outline"
-                  className="bg-transparent border-zinc-600 text-zinc-200 hover:bg-zinc-700 hover:text-emerald-400 transition-all duration-300 transform hover:scale-105 text-lg px-8 py-3 rounded-md shadow-lg hover:shadow-xl"
+                  className="bg-white hover:text-white bg-transparent hover:bg-white/10 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-700 dark:hover:text-emerald-400 transition-all duration-300 transform hover:scale-105 text-lg px-8 py-3 rounded-md shadow-lg hover:shadow-xl font-semibold"
                 >
                   How it works
                 </Button>
@@ -227,48 +242,57 @@ export default function LandingPage() {
             </div>
           </div>
         </motion.section>
-        <section className="w-full py-20 bg-zinc-800">
+        <section className="w-full py-20 bg-white dark:bg-zinc-800">
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter text-center mb-12 text-zinc-200">
+            <h2 className="text-3xl font-bold tracking-tighter text-center mb-12 text-gray-900 dark:text-zinc-200">
               Key Features
             </h2>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto">
-              <Card className="bg-zinc-700 border-none shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105 duration-300">
+              <Card className="bg-gray-50 dark:bg-zinc-700 border-none shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105 duration-300">
                 <CardHeader>
-                  <Zap className="h-10 w-10 mb-2 text-emerald-400 mx-auto" />
-                  <CardTitle className="text-xl font-semibold text-zinc-200 text-center">
+                  <Zap
+                    className="h-10 w-10 mb-2 text-yellow-500 dark:text-emerald-400 mx-auto"
+                    aria-hidden="true"
+                  />
+                  <CardTitle className="text-xl font-semibold text-gray-900 dark:text-zinc-200 text-center">
                     Real-time Updates
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-zinc-400 text-center">
+                  <p className="text-gray-600 dark:text-zinc-400 text-center">
                     Get instant notifications on price changes for your tracked
                     products.
                   </p>
                 </CardContent>
               </Card>
-              <Card className="bg-zinc-700 border-none shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105 duration-300">
+              <Card className="bg-gray-50 dark:bg-zinc-700 border-none shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105 duration-300">
                 <CardHeader>
-                  <Shield className="h-10 w-10 mb-2 text-emerald-400 mx-auto" />
-                  <CardTitle className="text-xl font-semibold text-zinc-200 text-center">
+                  <Shield
+                    className="h-10 w-10 mb-2 text-green-500 dark:text-emerald-400 mx-auto"
+                    aria-hidden="true"
+                  />
+                  <CardTitle className="text-xl font-semibold text-gray-900 dark:text-zinc-200 text-center">
                     Secure & Private
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-zinc-400 text-center">
+                  <p className="text-gray-600 dark:text-zinc-400 text-center">
                     Your data is encrypted and never shared with third parties.
                   </p>
                 </CardContent>
               </Card>
-              <Card className="bg-zinc-700 border-none shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105 duration-300">
+              <Card className="bg-gray-50 dark:bg-zinc-700 border-none shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105 duration-300">
                 <CardHeader>
-                  <Clock className="h-10 w-10 mb-2 text-emerald-400 mx-auto" />
-                  <CardTitle className="text-xl font-semibold text-zinc-200 text-center">
+                  <Clock
+                    className="h-10 w-10 mb-2 text-purple-500 dark:text-emerald-400 mx-auto"
+                    aria-hidden="true"
+                  />
+                  <CardTitle className="text-xl font-semibold text-gray-900 dark:text-zinc-200 text-center">
                     Historical Data
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-zinc-400 text-center">
+                  <p className="dark:text-zinc-400 text-gray-600 text-center">
                     View price trends and make informed purchasing decisions.
                   </p>
                 </CardContent>
@@ -276,44 +300,53 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-        <section className="w-full py-20 bg-zinc-900">
+        <section className="w-full py-20 dark:bg-zinc-900 bg-gray-100">
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter text-center mb-12 text-zinc-200">
+            <h2 className="text-3xl font-bold tracking-tighter text-center mb-12 dark:text-zinc-200 text-gray-900">
               How It Works
             </h2>
             <div className="grid gap-8 md:grid-cols-3 max-w-4xl mx-auto">
               <div className="flex flex-col items-center space-y-4 text-center">
-                <div className="bg-emerald-500 p-3 rounded-full">
-                  <Search className="h-8 w-8 text-zinc-900" />
+                <div className="bg-blue-100 dark:bg-emerald-500 p-3 rounded-full">
+                  <Search
+                    className="h-8 w-8 text-blue-600 dark:text-zinc-900"
+                    aria-hidden="true"
+                  />
                 </div>
-                <h3 className="text-xl font-bold text-zinc-200">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-zinc-200">
                   Add Products
                 </h3>
-                <p className="text-zinc-400">
+                <p className="dark:text-zinc-400 text-gray-600">
                   Simply paste the URL of the product you want to track. We
                   support major e-commerce platforms.
                 </p>
               </div>
               <div className="flex flex-col items-center space-y-4 text-center">
-                <div className="bg-emerald-500 p-3 rounded-full">
-                  <BarChart2 className="h-8 w-8 text-zinc-900" />
+                <div className="dark:bg-emerald-500 bg-green-100 p-3 rounded-full">
+                  <BarChart2
+                    className="h-8 w-8 dark:text-zinc-900 text-green-600"
+                    aria-hidden="true"
+                  />
                 </div>
-                <h3 className="text-xl font-bold text-zinc-200">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-zinc-200">
                   Monitor Prices
                 </h3>
-                <p className="text-zinc-400">
+                <p className="dark:text-zinc-400 text-gray-600">
                   We will keep an eye on the prices and track their changes over
                   time.
                 </p>
               </div>
               <div className="flex flex-col items-center space-y-4 text-center">
-                <div className="bg-emerald-500 p-3 rounded-full">
-                  <Bell className="h-8 w-8 text-zinc-900" />
+                <div className="dark:bg-emerald-500 bg-purple-100 p-3 rounded-full">
+                  <Bell
+                    className="h-8 w-8 dark:text-zinc-900 text-purple-600"
+                    aria-hidden="true"
+                  />
                 </div>
-                <h3 className="text-xl font-bold text-zinc-200">
+                <h3 className="text-xl font-bold dark:text-zinc-200 text-gray-900">
                   Get Notified
                 </h3>
-                <p className="text-zinc-400">
+                <p className="dark:text-zinc-400 text-gray-600">
                   Receive instant notifications when prices drop or reach your
                   desired level.
                 </p>
@@ -323,12 +356,23 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer className="bg-zinc-800 text-zinc-200 py-12">
+      <footer className="dark:bg-zinc-800 dark:text-zinc-200 py-12 bg-gray-900 text-white">
         <div className="container mx-auto px-4 md:text-left text-center">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold mb-4">About PriceTracker</h3>
-              <p className="text-sm text-zinc-400 md:mr-4">
+            <div className="space-y-4">
+              <Link
+                className="flex items-center md:justify-start justify-center"
+                href="#"
+              >
+                <BarChart2
+                  className="h-8 w-8 text-blue-600 dark:text-emerald-400"
+                  aria-hidden="true"
+                />
+                <span className="ml-2 text-2xl font-bold text-white dark:text-zinc-200">
+                  PriceTracker
+                </span>
+              </Link>
+              <p className="text-sm dark:text-zinc-400 text-gray-400 md:mr-4">
                 PriceTracker helps you save money by tracking product prices
                 across multiple e-commerce platforms.
               </p>
@@ -338,7 +382,7 @@ export default function LandingPage() {
               <ul className="space-y-2">
                 <li>
                   <Link
-                    className="text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     Home
@@ -346,7 +390,7 @@ export default function LandingPage() {
                 </li>
                 <li>
                   <Link
-                    className="text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     How It Works
@@ -354,7 +398,7 @@ export default function LandingPage() {
                 </li>
                 <li>
                   <Link
-                    className="text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     FAQs
@@ -362,7 +406,7 @@ export default function LandingPage() {
                 </li>
                 <li>
                   <Link
-                    className="text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     Contact Us
@@ -375,7 +419,7 @@ export default function LandingPage() {
               <ul className="space-y-2">
                 <li>
                   <Link
-                    className="text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     Privacy Policy
@@ -383,7 +427,7 @@ export default function LandingPage() {
                 </li>
                 <li>
                   <Link
-                    className="text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     Terms of Service
@@ -396,7 +440,8 @@ export default function LandingPage() {
               <div className="flex md:justify-start justify-center space-x-4">
                 <Link
                   href="/"
-                  className="text-zinc-400 hover:text-emerald-400 transition-colors"
+                  className="text-gray-400 hover:text-blue-400 dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
+                  aria-label="Facebook"
                 >
                   <svg
                     className="h-6 w-6"
@@ -413,7 +458,8 @@ export default function LandingPage() {
                 </Link>
                 <Link
                   href="#"
-                  className="text-zinc-400 hover:text-emerald-400 transition-colors"
+                  className="text-gray-400 hover:text-blue-400 dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
+                  aria-label="Twitter"
                 >
                   <svg
                     className="h-6 w-6"
@@ -426,7 +472,8 @@ export default function LandingPage() {
                 </Link>
                 <Link
                   href="#"
-                  className="text-zinc-400 hover:text-emerald-400 transition-colors"
+                  className="text-gray-400 hover:text-blue-400 dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
+                  aria-label="Instagram"
                 >
                   <svg
                     className="h-6 w-6"
@@ -444,8 +491,8 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t border-zinc-700 text-center">
-            <p className="text-sm text-zinc-400">
+          <div className="mt-8 pt-8 border-t border-gray-800 dark:border-zinc-700 text-center">
+            <p className="text-sm dark:text-zinc-400 text-gray-400">
               © {new Date().getFullYear()} PriceTracker. All rights reserved.
             </p>
           </div>
@@ -454,10 +501,11 @@ export default function LandingPage() {
 
       {showScrollTop && (
         <Button
-          className="fixed bottom-4 right-4 bg-emerald-500 text-zinc-900 rounded-full p-2 shadow-lg hover:bg-emerald-600  transition-all duration-300 animate-bounce"
+          className="fixed bottom-4 right-4 bg-blue-600 text-white dark:bg-emerald-500 dark:text-zinc-900 rounded-full p-2 shadow-lg dark:hover:bg-emerald-600 hover:bg-blue-700 transition-all duration-300 animate-bounce"
           onClick={scrollToTop}
+          aria-label="Scroll to top"
         >
-          <ChevronUp className="h-6 w-6" />
+          <ChevronUp className="h-6 w-6" aria-hidden="true" />
         </Button>
       )}
     </div>
