@@ -167,7 +167,7 @@ export default function PricingPage() {
             />
             <FaqItem
               question="What happens if I exceed my product tracking limit?"
-              answer="You'll be notified when you're close to your limit. You can upgrade your plan or remove some tracked products to stay within your limit."
+              answer="You will be notified when you are close to your limit. You can upgrade your plan or remove some tracked products to stay within your limit."
             />
             <FaqItem
               question="Do you offer refunds?"

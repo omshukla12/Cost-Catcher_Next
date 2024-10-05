@@ -256,7 +256,7 @@ export default function SignInPage() {
           </CardContent>
           <CardFooter className="justify-center">
             <p className="text-zinc-400">
-              Don't have an account?{" "}
+              Do not have an account?{" "}
               <Link
                 href="/signup"
                 className="text-emerald-400 hover:underline font-semibold"

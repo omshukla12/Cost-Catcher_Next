@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User"); // Assuming a User model exists
 
 router.get("/", (req, res) => {
-  res.status(200).json({ message: "I'm running" });
+  res.status(200).json({ message: "I am running" });
 });
 
 // Signup route

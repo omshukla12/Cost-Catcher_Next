@@ -26,7 +26,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { signUp, resendConfirmationEmail } from "../../lib/auth";
-import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
   const [name, setName] = useState("");
@@ -41,7 +40,6 @@ export default function SignUpPage() {
   const [savings, setSavings] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSignupComplete, setIsSignupComplete] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -333,7 +331,7 @@ export default function SignUpPage() {
               <div className="text-center">
                 <CheckCircle className="h-16 w-16 text-emerald-400 mx-auto mb-4" />
                 <p className="text-zinc-200 mb-4">
-                  We've sent a confirmation email to <strong>{email}</strong>.
+                  We have sent a confirmation email to <strong>{email}</strong>.
                   Please check your inbox and click the link to activate your
                   account.
                 </p>
