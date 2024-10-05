@@ -160,7 +160,7 @@ export default function LandingPage() {
                 </Button>
               </Link>
               <Link href="/signup">
-                <Button className="border-gray-300 text-gray-700 hover:bg-gray-100 hover:text-blue-600 dark:bg-emerald-500 dark:text-zinc-900 dark:hover:bg-emerald-600 transition-colors w-full justify-center">
+                <Button className="dark:bg-emerald-500 dark:text-zinc-900 dark:hover:bg-emerald-600 bg-blue-600 text-white hover:bg-blue-700 transition-colors w-full justify-center">
                   Sign Up
                 </Button>
               </Link>

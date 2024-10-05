@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,21 +13,32 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { BarChart2, ArrowRight, Mail, Lock, Sparkles } from "lucide-react";
+import {
+  BarChart2,
+  ArrowRight,
+  Mail,
+  Lock,
+  Sparkles,
+  AlertCircle,
+} from "lucide-react";
 import Link from "next/link";
-import { signIn } from "@/lib/auth";
+import { signIn } from "../../lib/auth";
 import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    general: "",
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrors({ email: "", password: "" });
+    setErrors({ email: "", password: "", general: "" });
     let hasError = false;
 
     if (email.trim() === "") {
@@ -48,7 +58,14 @@ export default function SignInPage() {
       try {
         const { data, error } = await signIn(email, password);
         if (error) {
-          setErrors((prev) => ({ ...prev, email: error.message }));
+          if (error.message.includes("Invalid login credentials")) {
+            setErrors((prev) => ({
+              ...prev,
+              general: "Invalid email or password",
+            }));
+          } else {
+            setErrors((prev) => ({ ...prev, general: error.message }));
+          }
         } else {
           console.log("User signed in:", data);
           router.push("/homepage");
@@ -57,7 +74,7 @@ export default function SignInPage() {
         console.error("Signin error:", error);
         setErrors((prev) => ({
           ...prev,
-          email: "An error occurred during signin",
+          general: "An unexpected error occurred. Please try again.",
         }));
       } finally {
         setIsSubmitting(false);
@@ -197,6 +214,16 @@ export default function SignInPage() {
                   Forgot password?
                 </Link>
               </div>
+              {errors.general && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center p-3 rounded-md bg-red-500 bg-opacity-10"
+                >
+                  <AlertCircle className="h-5 w-5 text-red-500 mr-2" />
+                  <p className="text-sm text-red-500">{errors.general}</p>
+                </motion.div>
+              )}
               <motion.div
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
@@ -229,7 +256,7 @@ export default function SignInPage() {
           </CardContent>
           <CardFooter className="justify-center">
             <p className="text-zinc-400">
-              Do not have an account?{" "}
+              Don't have an account?{" "}
               <Link
                 href="/signup"
                 className="text-emerald-400 hover:underline font-semibold"
