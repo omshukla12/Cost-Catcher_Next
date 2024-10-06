@@ -22,8 +22,9 @@ import {
   AlertCircle,
 } from "lucide-react";
 import Link from "next/link";
-import { signIn } from "../../lib/auth";
+import { signIn } from "@/lib/auth";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
@@ -35,6 +36,7 @@ export default function SignInPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+  const { theme } = useTheme();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,7 +97,7 @@ export default function SignInPage() {
 
   return (
     <motion.div
-      className="min-h-screen bg-zinc-900 flex flex-col justify-center items-center p-4"
+      className="min-h-screen bg-gray-100 dark:bg-zinc-900 flex flex-col justify-center items-center p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -109,8 +111,8 @@ export default function SignInPage() {
           href="/"
           className="flex items-center mb-12 transition-transform hover:scale-105"
         >
-          <BarChart2 className="h-12 w-12 text-zinc-200" />
-          <span className="ml-2 text-4xl font-bold text-zinc-200">
+          <BarChart2 className="h-12 w-12 text-blue-600 dark:text-zinc-200" />
+          <span className="ml-2 text-4xl font-bold text-gray-900 dark:text-zinc-200">
             PriceTracker
           </span>
         </Link>
@@ -121,12 +123,12 @@ export default function SignInPage() {
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
         className="w-full max-w-md"
       >
-        <Card className="bg-zinc-800 border-zinc-700 shadow-xl">
+        <Card className="bg-white dark:bg-zinc-800 border-gray-200 dark:border-zinc-700 shadow-xl">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-zinc-200">
+            <CardTitle className="text-2xl font-bold text-gray-900 dark:text-zinc-200">
               Sign in to your account
             </CardTitle>
-            <CardDescription className="text-zinc-400">
+            <CardDescription className="text-gray-500 dark:text-zinc-400">
               Enter your email and password to access your PriceTracker account
             </CardDescription>
           </CardHeader>
@@ -135,19 +137,19 @@ export default function SignInPage() {
               <motion.div variants={inputVariants} whileFocus="focus">
                 <Label
                   htmlFor="email"
-                  className="text-sm font-medium text-zinc-300"
+                  className="text-sm font-medium text-gray-700 dark:text-zinc-300"
                 >
                   Email Address
                 </Label>
                 <div className="mt-1 relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-500" />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-zinc-500" />
                   <Input
                     id="email"
                     type="email"
                     placeholder="john@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 bg-zinc-700 border-zinc-600 text-zinc-200 placeholder-zinc-400 focus:ring-emerald-400 focus:border-emerald-400"
+                    className="pl-10 bg-white dark:bg-zinc-700 border-gray-300 dark:border-zinc-600 text-gray-900 dark:text-zinc-200 placeholder-gray-400 dark:placeholder-zinc-400 focus:ring-blue-500 dark:focus:ring-emerald-400 focus:border-blue-500 dark:focus:border-emerald-400"
                     aria-invalid={errors.email ? "true" : "false"}
                   />
                 </div>
@@ -157,7 +159,7 @@ export default function SignInPage() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="text-sm text-red-400 mt-1"
+                      className="text-sm text-red-600 dark:text-red-400 mt-1"
                     >
                       {errors.email}
                     </motion.p>
@@ -167,18 +169,18 @@ export default function SignInPage() {
               <motion.div variants={inputVariants} whileFocus="focus">
                 <Label
                   htmlFor="password"
-                  className="text-sm font-medium text-zinc-300"
+                  className="text-sm font-medium text-gray-700 dark:text-zinc-300"
                 >
                   Password
                 </Label>
                 <div className="mt-1 relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-500" />
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-zinc-500" />
                   <Input
                     id="password"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 bg-zinc-700 border-zinc-600 text-zinc-200 placeholder-zinc-400 focus:ring-emerald-400 focus:border-emerald-400"
+                    className="pl-10 bg-white dark:bg-zinc-700 border-gray-300 dark:border-zinc-600 text-gray-900 dark:text-zinc-200 placeholder-gray-400 dark:placeholder-zinc-400 focus:ring-blue-500 dark:focus:ring-emerald-400 focus:border-blue-500 dark:focus:border-emerald-400"
                     aria-invalid={errors.password ? "true" : "false"}
                   />
                 </div>
@@ -188,7 +190,7 @@ export default function SignInPage() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="text-sm text-red-400 mt-1"
+                      className="text-sm text-red-600 dark:text-red-400 mt-1"
                     >
                       {errors.password}
                     </motion.p>
@@ -203,13 +205,15 @@ export default function SignInPage() {
                   <input
                     type="checkbox"
                     id="remember"
-                    className="form-checkbox h-4 w-4 text-emerald-400 rounded border-zinc-600 bg-zinc-700 focus:ring-emerald-400"
+                    className="form-checkbox h-4 w-4 text-blue-600 dark:text-emerald-400 rounded border-gray-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 focus:ring-blue-500 dark:focus:ring-emerald-400"
                   />
-                  <span className="text-sm text-zinc-300">Remember me</span>
+                  <span className="text-sm text-gray-700 dark:text-zinc-300">
+                    Remember me
+                  </span>
                 </Label>
                 <Link
                   href="/forgot-password"
-                  className="text-sm text-emerald-400 hover:underline"
+                  className="text-sm text-blue-600 hover:text-blue-800 dark:text-emerald-400 dark:hover:text-emerald-300 hover:underline"
                 >
                   Forgot password?
                 </Link>
@@ -218,10 +222,12 @@ export default function SignInPage() {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center p-3 rounded-md bg-red-500 bg-opacity-10"
+                  className="flex items-center p-3 rounded-md bg-red-100 dark:bg-red-900 bg-opacity-50 dark:bg-opacity-10"
                 >
-                  <AlertCircle className="h-5 w-5 text-red-500 mr-2" />
-                  <p className="text-sm text-red-500">{errors.general}</p>
+                  <AlertCircle className="h-5 w-5 text-red-500 dark:text-red-400 mr-2" />
+                  <p className="text-sm text-red-600 dark:text-red-400">
+                    {errors.general}
+                  </p>
                 </motion.div>
               )}
               <motion.div
@@ -230,7 +236,7 @@ export default function SignInPage() {
               >
                 <Button
                   type="submit"
-                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-zinc-900 font-semibold py-3 rounded-md transition-all duration-300 focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-50"
+                  className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 text-white dark:text-zinc-900 font-semibold py-3 rounded-md transition-all duration-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-emerald-400 focus:ring-opacity-50"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -255,11 +261,11 @@ export default function SignInPage() {
             </form>
           </CardContent>
           <CardFooter className="justify-center">
-            <p className="text-zinc-400">
-              Do not have an account?{" "}
+            <p className="text-gray-600 dark:text-zinc-400">
+              Don't have an account?{" "}
               <Link
                 href="/signup"
-                className="text-emerald-400 hover:underline font-semibold"
+                className="text-blue-600 hover:text-blue-800 dark:text-emerald-400 dark:hover:text-emerald-300 hover:underline font-semibold"
               >
                 Sign up
               </Link>
