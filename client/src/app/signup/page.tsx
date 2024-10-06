@@ -26,7 +26,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { signUp, resendConfirmationEmail } from "@/lib/auth";
-import { useTheme } from "next-themes";
 
 export default function SignUpPage() {
   const [name, setName] = useState("");
@@ -41,7 +40,6 @@ export default function SignUpPage() {
   const [savings, setSavings] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSignupComplete, setIsSignupComplete] = useState(false);
-  const { theme } = useTheme();
 
   useEffect(() => {
     const interval = setInterval(() => {

@@ -24,7 +24,6 @@ import {
 import Link from "next/link";
 import { signIn } from "@/lib/auth";
 import { useRouter } from "next/navigation";
-import { useTheme } from "next-themes";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
@@ -36,7 +35,6 @@ export default function SignInPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
-  const { theme } = useTheme();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
