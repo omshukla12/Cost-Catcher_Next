@@ -1,27 +1,20 @@
 {
-  "name": "price-tracker",
+  "name": "backend",
   "version": "1.0.0",
-  "description": "A E-Commerce price tracker web application",
+  "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "javascript"
-  ],
-  "author": "Shinji Ikari",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "Cost-catcher": "file:",
-    "dotenv": "^16.4.5",
+    "@supabase/supabase-js": "^2.45.4",
+    "backend": "file:",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
     "express": "^4.21.0",
-    "mongoose": "^8.6.3",
-    "price-tracker": "file:",
-    "Price-Tracker": "file:"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.6"
+    "mongoose": "^8.6.3"
   }
 }
