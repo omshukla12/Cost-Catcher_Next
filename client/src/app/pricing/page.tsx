@@ -26,7 +26,6 @@ import {
   Menu,
   X,
   ChevronUp,
-  ArrowRight,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
