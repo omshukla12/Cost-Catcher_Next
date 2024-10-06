@@ -25,7 +25,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import Link from "next/link";
-import { signUp, resendConfirmationEmail } from "../../lib/auth";
+import { signUp, resendConfirmationEmail } from "@/lib/auth";
 
 export default function SignUpPage() {
   const [name, setName] = useState("");
@@ -137,7 +137,7 @@ export default function SignUpPage() {
 
   return (
     <motion.div
-      className="min-h-screen bg-zinc-900 flex flex-col justify-center items-center p-4"
+      className="min-h-screen bg-gray-100 dark:bg-zinc-900 flex flex-col justify-center items-center p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -151,8 +151,8 @@ export default function SignUpPage() {
           href="/"
           className="flex items-center mb-12 transition-transform hover:scale-105"
         >
-          <BarChart2 className="h-12 w-12 text-zinc-200" />
-          <span className="ml-2 text-4xl font-bold text-zinc-200">
+          <BarChart2 className="h-12 w-12 text-blue-600 dark:text-zinc-200" />
+          <span className="ml-2 text-4xl font-bold text-gray-900 dark:text-zinc-200">
             PriceTracker
           </span>
         </Link>
@@ -163,12 +163,12 @@ export default function SignUpPage() {
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
         className="w-full max-w-md"
       >
-        <Card className="bg-zinc-800 border-zinc-700 shadow-xl">
+        <Card className="bg-white dark:bg-zinc-800 border-gray-200 dark:border-zinc-700 shadow-xl">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-zinc-200">
+            <CardTitle className="text-2xl font-bold text-gray-900 dark:text-zinc-200">
               {isSignupComplete ? "Confirm Your Email" : "Create an account"}
             </CardTitle>
-            <CardDescription className="text-zinc-400">
+            <CardDescription className="text-gray-500 dark:text-zinc-400">
               {isSignupComplete
                 ? "Please check your email to confirm your account"
                 : "Enter your details below to create your account and start saving"}
@@ -183,11 +183,11 @@ export default function SignUpPage() {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.2, duration: 0.5 }}
                 >
-                  <p className="text-lg font-semibold text-zinc-300 mb-2">
+                  <p className="text-lg font-semibold text-gray-700 dark:text-zinc-300 mb-2">
                     Members have saved
                   </p>
                   <motion.div
-                    className="text-4xl font-bold text-zinc-200 flex items-center justify-center"
+                    className="text-4xl font-bold text-gray-900 dark:text-zinc-200 flex items-center justify-center"
                     animate={{ scale: [1, 1.1, 1] }}
                     transition={{
                       repeat: Infinity,
@@ -195,8 +195,8 @@ export default function SignUpPage() {
                       ease: "easeInOut",
                     }}
                   >
-                    <IndianRupee className="h-8 w-8 mr-2 text-emerald-400" />
-                    <span className="tabular-nums text-emerald-400">
+                    <IndianRupee className="h-8 w-8 mr-2 text-green-500 dark:text-emerald-400" />
+                    <span className="tabular-nums text-green-500 dark:text-emerald-400">
                       {savings.toLocaleString()}
                     </span>
                   </motion.div>
@@ -205,18 +205,18 @@ export default function SignUpPage() {
                   <motion.div variants={inputVariants} whileFocus="focus">
                     <Label
                       htmlFor="name"
-                      className="text-sm font-medium text-zinc-300"
+                      className="text-sm font-medium text-gray-700 dark:text-zinc-300"
                     >
                       Full Name
                     </Label>
                     <div className="mt-1 relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-500" />
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-zinc-500" />
                       <Input
                         id="name"
                         placeholder="John Doe"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="pl-10 bg-zinc-700 border-zinc-600 text-zinc-200 placeholder-zinc-400 focus:ring-emerald-400 focus:border-emerald-400"
+                        className="pl-10 bg-white dark:bg-zinc-700 border-gray-300 dark:border-zinc-600 text-gray-900 dark:text-zinc-200 placeholder-gray-400 dark:placeholder-zinc-400 focus:ring-blue-500 dark:focus:ring-emerald-400 focus:border-blue-500 dark:focus:border-emerald-400"
                         aria-invalid={errors.name ? "true" : "false"}
                       />
                     </div>
@@ -226,7 +226,7 @@ export default function SignUpPage() {
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          className="text-sm text-red-400 mt-1"
+                          className="text-sm text-red-600 dark:text-red-400 mt-1"
                         >
                           {errors.name}
                         </motion.p>
@@ -236,19 +236,19 @@ export default function SignUpPage() {
                   <motion.div variants={inputVariants} whileFocus="focus">
                     <Label
                       htmlFor="email"
-                      className="text-sm font-medium text-zinc-300"
+                      className="text-sm font-medium text-gray-700 dark:text-zinc-300"
                     >
                       Email Address
                     </Label>
                     <div className="mt-1 relative">
-                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-500" />
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-zinc-500" />
                       <Input
                         id="email"
                         type="email"
                         placeholder="john@example.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="pl-10 bg-zinc-700 border-zinc-600 text-zinc-200 placeholder-zinc-400 focus:ring-emerald-400 focus:border-emerald-400"
+                        className="pl-10 bg-white dark:bg-zinc-700 border-gray-300 dark:border-zinc-600 text-gray-900 dark:text-zinc-200 placeholder-gray-400 dark:placeholder-zinc-400 focus:ring-blue-500 dark:focus:ring-emerald-400 focus:border-blue-500 dark:focus:border-emerald-400"
                         aria-invalid={errors.email ? "true" : "false"}
                       />
                     </div>
@@ -258,7 +258,7 @@ export default function SignUpPage() {
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          className="text-sm text-red-400 mt-1"
+                          className="text-sm text-red-600 dark:text-red-400 mt-1"
                         >
                           {errors.email}
                         </motion.p>
@@ -268,18 +268,18 @@ export default function SignUpPage() {
                   <motion.div variants={inputVariants} whileFocus="focus">
                     <Label
                       htmlFor="password"
-                      className="text-sm font-medium text-zinc-300"
+                      className="text-sm font-medium text-gray-700 dark:text-zinc-300"
                     >
                       Password
                     </Label>
                     <div className="mt-1 relative">
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-500" />
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-zinc-500" />
                       <Input
                         id="password"
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="pl-10 bg-zinc-700 border-zinc-600 text-zinc-200 placeholder-zinc-400 focus:ring-emerald-400 focus:border-emerald-400"
+                        className="pl-10 bg-white dark:bg-zinc-700 border-gray-300 dark:border-zinc-600 text-gray-900 dark:text-zinc-200 placeholder-gray-400 dark:placeholder-zinc-400 focus:ring-blue-500 dark:focus:ring-emerald-400 focus:border-blue-500 dark:focus:border-emerald-400"
                         aria-invalid={errors.password ? "true" : "false"}
                       />
                     </div>
@@ -289,7 +289,7 @@ export default function SignUpPage() {
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          className="text-sm text-red-400 mt-1"
+                          className="text-sm text-red-600 dark:text-red-400 mt-1"
                         >
                           {errors.password}
                         </motion.p>
@@ -302,7 +302,7 @@ export default function SignUpPage() {
                   >
                     <Button
                       type="submit"
-                      className="w-full bg-emerald-500 hover:bg-emerald-600 text-zinc-900 font-semibold py-3 rounded-md transition-all duration-300 focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-50"
+                      className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 text-white dark:text-zinc-900 font-semibold py-3 rounded-md transition-all duration-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-emerald-400 focus:ring-opacity-50"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (
@@ -329,15 +329,15 @@ export default function SignUpPage() {
             )}
             {isSignupComplete && (
               <div className="text-center">
-                <CheckCircle className="h-16 w-16 text-emerald-400 mx-auto mb-4" />
-                <p className="text-zinc-200 mb-4">
+                <CheckCircle className="h-16 w-16 text-green-500 dark:text-emerald-400 mx-auto mb-4" />
+                <p className="text-gray-700 dark:text-zinc-200 mb-4">
                   We have sent a confirmation email to <strong>{email}</strong>.
                   Please check your inbox and click the link to activate your
                   account.
                 </p>
                 <Button
                   onClick={handleResendConfirmation}
-                  className="w-full bg-zinc-700 hover:bg-zinc-600 text-zinc-200 font-semibold py-2 rounded-md transition-all duration-300 focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-50"
+                  className="w-full bg-gray-200 hover:bg-gray-300 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-gray-800 dark:text-zinc-200 font-semibold py-2 rounded-md transition-all duration-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-emeral-400 focus:ring-opacity-50"
                   disabled={isSubmitting}
                 >
                   Resend Confirmation Email
@@ -348,19 +348,21 @@ export default function SignUpPage() {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center p-3 rounded-md bg-red-500 bg-opacity-10"
+                className="flex items-center p-3 rounded-md bg-red-100 dark:bg-red-900 bg-opacity-50 dark:bg-opacity-10"
               >
-                <AlertCircle className="h-5 w-5 text-red-500 mr-2" />
-                <p className="text-sm text-red-500">{errors.general}</p>
+                <AlertCircle className="h-5 w-5 text-red-500 dark:text-red-400 mr-2" />
+                <p className="text-sm text-red-600 dark:text-red-400">
+                  {errors.general}
+                </p>
               </motion.div>
             )}
           </CardContent>
           <CardFooter className="justify-center">
-            <p className="text-zinc-400">
+            <p className="text-gray-600 dark:text-zinc-400">
               Already have an account?{" "}
               <Link
                 href="/signin"
-                className="text-emerald-400 hover:underline font-semibold"
+                className="text-blue-600 hover:text-blue-800 dark:text-emerald-400 dark:hover:text-emerald-300 hover:underline font-semibold"
               >
                 Sign in
               </Link>
