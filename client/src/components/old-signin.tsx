@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,32 +13,18 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import {
-  BarChart2,
-  ArrowRight,
-  Mail,
-  Lock,
-  Sparkles,
-  AlertCircle,
-} from "lucide-react";
+import { BarChart2, ArrowRight, Mail, Lock, Sparkles } from "lucide-react";
 import Link from "next/link";
-import { signIn } from "../../lib/auth";
-import { useRouter } from "next/navigation";
 
-export default function SignInPage() {
+export function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-    general: "",
-  });
+  const [errors, setErrors] = useState({ email: "", password: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrors({ email: "", password: "", general: "" });
+    setErrors({ email: "", password: "" });
     let hasError = false;
 
     if (email.trim() === "") {
@@ -55,30 +41,10 @@ export default function SignInPage() {
 
     if (!hasError) {
       setIsSubmitting(true);
-      try {
-        const { data, error } = await signIn(email, password);
-        if (error) {
-          if (error.message.includes("Invalid login credentials")) {
-            setErrors((prev) => ({
-              ...prev,
-              general: "Invalid email or password",
-            }));
-          } else {
-            setErrors((prev) => ({ ...prev, general: error.message }));
-          }
-        } else {
-          console.log("User signed in:", data);
-          router.push("/homepage");
-        }
-      } catch (error) {
-        console.error("Signin error:", error);
-        setErrors((prev) => ({
-          ...prev,
-          general: "An unexpected error occurred. Please try again.",
-        }));
-      } finally {
-        setIsSubmitting(false);
-      }
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      console.log("Form submitted:", { email, password });
+      setIsSubmitting(false);
     }
   };
 
@@ -132,7 +98,11 @@ export default function SignInPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <form onSubmit={handleSubmit} className="space-y-4">
-              <motion.div variants={inputVariants} whileFocus="focus">
+              <motion.div
+                variants={inputVariants}
+                whileFocus="focus"
+                // whileBlur="blur"
+              >
                 <Label
                   htmlFor="email"
                   className="text-sm font-medium text-zinc-300"
@@ -164,7 +134,11 @@ export default function SignInPage() {
                   )}
                 </AnimatePresence>
               </motion.div>
-              <motion.div variants={inputVariants} whileFocus="focus">
+              <motion.div
+                variants={inputVariants}
+                whileFocus="focus"
+                // whileBlur="blur"
+              >
                 <Label
                   htmlFor="password"
                   className="text-sm font-medium text-zinc-300"
@@ -214,16 +188,6 @@ export default function SignInPage() {
                   Forgot password?
                 </Link>
               </div>
-              {errors.general && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center p-3 rounded-md bg-red-500 bg-opacity-10"
-                >
-                  <AlertCircle className="h-5 w-5 text-red-500 mr-2" />
-                  <p className="text-sm text-red-500">{errors.general}</p>
-                </motion.div>
-              )}
               <motion.div
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,29 +18,36 @@ import {
   ArrowRight,
   Mail,
   Lock,
+  User,
+  IndianRupee,
   Sparkles,
-  AlertCircle,
 } from "lucide-react";
 import Link from "next/link";
-import { signIn } from "../../lib/auth";
-import { useRouter } from "next/navigation";
 
-export default function SignInPage() {
+export function UpdatedSignup() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-    general: "",
-  });
+  const [errors, setErrors] = useState({ name: "", email: "", password: "" });
+  const [savings, setSavings] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSavings((prev) => prev + Math.floor(Math.random() * 100));
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrors({ email: "", password: "", general: "" });
+    setErrors({ name: "", email: "", password: "" });
     let hasError = false;
 
+    if (name.trim() === "") {
+      setErrors((prev) => ({ ...prev, name: "Name is required" }));
+      hasError = true;
+    }
     if (email.trim() === "") {
       setErrors((prev) => ({ ...prev, email: "Email is required" }));
       hasError = true;
@@ -48,37 +55,20 @@ export default function SignInPage() {
       setErrors((prev) => ({ ...prev, email: "Email is invalid" }));
       hasError = true;
     }
-    if (password.trim() === "") {
-      setErrors((prev) => ({ ...prev, password: "Password is required" }));
+    if (password.length < 8) {
+      setErrors((prev) => ({
+        ...prev,
+        password: "Password must be at least 8 characters long",
+      }));
       hasError = true;
     }
 
     if (!hasError) {
       setIsSubmitting(true);
-      try {
-        const { data, error } = await signIn(email, password);
-        if (error) {
-          if (error.message.includes("Invalid login credentials")) {
-            setErrors((prev) => ({
-              ...prev,
-              general: "Invalid email or password",
-            }));
-          } else {
-            setErrors((prev) => ({ ...prev, general: error.message }));
-          }
-        } else {
-          console.log("User signed in:", data);
-          router.push("/homepage");
-        }
-      } catch (error) {
-        console.error("Signin error:", error);
-        setErrors((prev) => ({
-          ...prev,
-          general: "An unexpected error occurred. Please try again.",
-        }));
-      } finally {
-        setIsSubmitting(false);
-      }
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      console.log("Form submitted:", { name, email, password });
+      setIsSubmitting(false);
     }
   };
 
@@ -124,15 +114,78 @@ export default function SignInPage() {
         <Card className="bg-zinc-800 border-zinc-700 shadow-xl">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold text-zinc-200">
-              Sign in to your account
+              Create an account
             </CardTitle>
             <CardDescription className="text-zinc-400">
-              Enter your email and password to access your PriceTracker account
+              Enter your details below to create your account and start saving
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            <motion.div
+              className="text-center mb-6"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              <p className="text-lg font-semibold text-zinc-300 mb-2">
+                Members have saved
+              </p>
+              <motion.div
+                className="text-4xl font-bold text-zinc-200 flex items-center justify-center"
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 5,
+                  ease: "easeInOut",
+                }}
+              >
+                <IndianRupee className="h-8 w-8 mr-2 text-emerald-400" />
+                <span className="tabular-nums text-emerald-400">
+                  {savings.toLocaleString()}
+                </span>
+              </motion.div>
+            </motion.div>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <motion.div variants={inputVariants} whileFocus="focus">
+              <motion.div
+                variants={inputVariants}
+                whileFocus="focus"
+                // whileBlur="blur"
+              >
+                <Label
+                  htmlFor="name"
+                  className="text-sm font-medium text-zinc-300"
+                >
+                  Full Name
+                </Label>
+                <div className="mt-1 relative">
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-500" />
+                  <Input
+                    id="name"
+                    placeholder="John Doe"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="pl-10 bg-zinc-700 border-zinc-600 text-zinc-200 placeholder-zinc-400 focus:ring-emerald-400 focus:border-emerald-400"
+                    aria-invalid={errors.name ? "true" : "false"}
+                  />
+                </div>
+                <AnimatePresence>
+                  {errors.name && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="text-sm text-red-400 mt-1"
+                    >
+                      {errors.name}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+              <motion.div
+                variants={inputVariants}
+                whileFocus="focus"
+                // whileBlur="blur"
+              >
                 <Label
                   htmlFor="email"
                   className="text-sm font-medium text-zinc-300"
@@ -164,7 +217,11 @@ export default function SignInPage() {
                   )}
                 </AnimatePresence>
               </motion.div>
-              <motion.div variants={inputVariants} whileFocus="focus">
+              <motion.div
+                variants={inputVariants}
+                whileFocus="focus"
+                // whileBlur="blur"
+              >
                 <Label
                   htmlFor="password"
                   className="text-sm font-medium text-zinc-300"
@@ -195,35 +252,6 @@ export default function SignInPage() {
                   )}
                 </AnimatePresence>
               </motion.div>
-              <div className="flex items-center justify-between">
-                <Label
-                  htmlFor="remember"
-                  className="flex items-center space-x-2 cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    id="remember"
-                    className="form-checkbox h-4 w-4 text-emerald-400 rounded border-zinc-600 bg-zinc-700 focus:ring-emerald-400"
-                  />
-                  <span className="text-sm text-zinc-300">Remember me</span>
-                </Label>
-                <Link
-                  href="/forgot-password"
-                  className="text-sm text-emerald-400 hover:underline"
-                >
-                  Forgot password?
-                </Link>
-              </div>
-              {errors.general && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center p-3 rounded-md bg-red-500 bg-opacity-10"
-                >
-                  <AlertCircle className="h-5 w-5 text-red-500 mr-2" />
-                  <p className="text-sm text-red-500">{errors.general}</p>
-                </motion.div>
-              )}
               <motion.div
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
@@ -246,7 +274,7 @@ export default function SignInPage() {
                     </motion.div>
                   ) : (
                     <>
-                      Sign In
+                      Create Account
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </>
                   )}
@@ -256,12 +284,12 @@ export default function SignInPage() {
           </CardContent>
           <CardFooter className="justify-center">
             <p className="text-zinc-400">
-              Do not have an account?{" "}
+              Already have an account?{" "}
               <Link
-                href="/signup"
+                href="/signin"
                 className="text-emerald-400 hover:underline font-semibold"
               >
-                Sign up
+                Sign in
               </Link>
             </p>
           </CardFooter>

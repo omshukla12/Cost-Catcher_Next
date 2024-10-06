@@ -1,10 +1,8 @@
 "use client";
 
-import * as React from "react";
-import { useState, useEffect, useRef } from "react";
-
-import Image from "next/image";
-import { useTheme } from "next-themes";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,17 +29,14 @@ import {
   User,
   Settings,
   ShoppingBag,
-  ArrowUp,
-  Sun,
-  Moon,
-  Laptop,
+  ChevronUp,
 } from "lucide-react";
-import Link from "next/link";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function HomePage() {
-  const { theme, setTheme } = useTheme();
-  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,13 +62,18 @@ export default function HomePage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-white">
-      <header className="sticky top-0 z-50 bg-white shadow-md">
-        <div className="container mx-auto px-4">
+    <div className="flex flex-col min-h-screen bg-zinc-900 text-zinc-200">
+      <motion.header
+        className="sticky top-0 z-50 bg-zinc-800 shadow-md"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      >
+        <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-16">
             <Link className="flex items-center justify-center" href="/">
-              <BarChart2 className="h-8 w-8 text-blue-600" />
-              <span className="ml-2 text-2xl font-bold text-gray-900">
+              <BarChart2 className="h-8 w-8 text-emerald-400" />
+              <span className="ml-2 text-2xl font-bold text-zinc-200">
                 PriceTracker
               </span>
             </Link>
@@ -89,7 +89,7 @@ export default function HomePage() {
                 <Link
                   key={item}
                   href="#"
-                  className="text-gray-600 hover:text-pink-500 transition-colors"
+                  className="text-zinc-400 hover:text-emerald-400 transition-colors"
                 >
                   {item}
                 </Link>
@@ -98,127 +98,150 @@ export default function HomePage() {
             <div className="flex items-center space-x-4">
               <div className="relative hidden md:block">
                 <Input
-                  className="w-64 pl-10 pr-4 py-2 rounded-full bg-gray-100 focus:bg-white transition-colors"
+                  className="w-64 pl-10 pr-4 py-2 rounded-full bg-zinc-700 text-zinc-200 placeholder-zinc-400 border-zinc-600 focus:border-emerald-400 focus:ring-emerald-400"
                   placeholder="Search products..."
                   type="search"
                 />
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-400" />
               </div>
               <Button variant="ghost" size="icon" className="hidden md:flex">
-                <Heart className="h-5 w-5 text-pink-500" />
+                <Heart className="h-5 w-5 text-emerald-400" />
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="hidden md:flex text-black"
+                    className="hidden md:flex"
                   >
-                    <User className="h-5 w-5" />
+                    <User className="h-5 w-5 text-zinc-200" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
+                <ThemeToggle />
+                <DropdownMenuContent
+                  align="end"
+                  className="w-56 bg-zinc-800 border-zinc-700"
+                >
                   <div className="flex items-center space-x-2 p-2">
                     <Avatar>
                       <AvatarImage src="/placeholder-avatar.jpg" alt="JD" />
                       <AvatarFallback>JD</AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="text-sm font-medium text-black">
-                        Om shukla
+                      <p className="text-sm font-medium text-zinc-200">
+                        John Doe
                       </p>
-                      <p className="text-xs text-black">testUI@example.com</p>
+                      <p className="text-xs text-zinc-400">
+                        john.doe@example.com
+                      </p>
                     </div>
                   </div>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem className="text-zinc-200 hover:text-emerald-400 hover:bg-zinc-700">
                     <User className="mr-2 h-4 w-4" />
                     View Profile
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem className="text-zinc-200 hover:text-emerald-400 hover:bg-zinc-700">
                     <Settings className="mr-2 h-4 w-4" />
                     Account Settings
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem className="text-zinc-200 hover:text-emerald-400 hover:bg-zinc-700">
                     <ShoppingBag className="mr-2 h-4 w-4" />
                     My Tracked Products
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem className="text-zinc-200 hover:text-emerald-400 hover:bg-zinc-700">
                     <Heart className="mr-2 h-4 w-4" />
                     Wishlist
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="text-red-600">
+                  <DropdownMenuItem className="text-red-400 hover:text-red-300 hover:bg-zinc-700">
                     <LogOut className="mr-2 h-4 w-4" />
                     Logout
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <Sheet>
+              <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="icon" className="md:hidden">
-                    <Menu className="h-6 w-6" />
+                    <Menu className="h-6 w-6 text-zinc-200" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent
                   side="left"
-                  className="w-[300px] sm:w-[400px] bg-white"
+                  className="w-[300px] sm:w-[400px] bg-zinc-800 border-r-zinc-700"
                 >
-                  <div className="flex items-center space-x-2 p-4 border-b">
+                  <div className="flex items-center space-x-2 p-4 border-b border-zinc-700">
                     <Avatar>
                       <AvatarImage src="/placeholder-avatar.jpg" alt="JD" />
                       <AvatarFallback>JD</AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="text-sm font-medium text-black">
-                        Om Shukla
+                      <p className="text-sm font-medium text-zinc-200">
+                        John Doe
                       </p>
-                      <p className="text-xs text-black">testUI@example.com</p>
+                      <p className="text-xs text-zinc-400">
+                        john.doe@example.com
+                      </p>
                     </div>
                   </div>
                   <nav className="flex flex-col space-y-4 mt-4">
                     <Input
-                      className="w-full"
+                      className="w-full bg-zinc-700 text-zinc-200 placeholder-zinc-400 border-zinc-600 focus:border-emerald-400 focus:ring-emerald-400"
                       placeholder="Search products..."
                       type="search"
                     />
                     <Link
                       href="#"
-                      className="text-gray-600 hover:text-pink-500 transition-colors"
+                      className="text-zinc-200 hover:text-emerald-400 transition-colors"
                     >
                       All
                     </Link>
                     <Link
                       href="#"
-                      className="text-gray-600 hover:text-pink-500 transition-colors"
+                      className="text-zinc-200 hover:text-emerald-400 transition-colors"
                     >
                       Electronics
                     </Link>
                     <Link
                       href="#"
-                      className="text-gray-600 hover:text-pink-500 transition-colors"
+                      className="text-zinc-200 hover:text-emerald-400 transition-colors"
                     >
                       Fashion
                     </Link>
                     <Link
                       href="#"
-                      className="text-gray-600 hover:text-pink-500 transition-colors"
+                      className="text-zinc-200 hover:text-emerald-400 transition-colors"
                     >
                       Home
                     </Link>
                     <Link
                       href="#"
-                      className="text-gray-600 hover:text-pink-500 transition-colors"
+                      className="text-zinc-200 hover:text-emerald-400 transition-colors"
                     >
                       Beauty
                     </Link>
                     <Link
                       href="#"
-                      className="text-gray-600 hover:text-pink-500 transition-colors"
+                      className="text-zinc-200 hover:text-emerald-400 transition-colors"
                     >
                       Sports
                     </Link>
+                    <Link
+                      href="#"
+                      className="text-zinc-200 hover:text-emerald-400 transition-colors"
+                    >
+                      <Heart className="inline-block mr-2 h-5 w-5" />
+                      Favorites
+                    </Link>
+                    <Link
+                      href="#"
+                      className="text-zinc-200 hover:text-emerald-400 transition-colors"
+                    >
+                      <Bell className="inline-block mr-2 h-5 w-5" />
+                      Alerts
+                    </Link>
+                    <hr className="my-4 border-zinc-700" />
                     <Button
                       variant="ghost"
-                      className="justify-start text-red-600"
+                      className="justify-start text-red-400 hover:text-red-300 hover:bg-zinc-700"
                     >
                       <LogOut className="mr-2 h-5 w-5" />
                       Logout
@@ -226,71 +249,63 @@ export default function HomePage() {
                   </nav>
                 </SheetContent>
               </Sheet>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="icon">
-                    {theme === "light" ? (
-                      <Sun className="h-[1.2rem] w-[1.2rem]" />
-                    ) : theme === "dark" ? (
-                      <Moon className="h-[1.2rem] w-[1.2rem]" />
-                    ) : (
-                      <Laptop className="h-[1.2rem] w-[1.2rem]" />
-                    )}
-                    <span className="sr-only">Toggle theme</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => setTheme("light")}>
-                    <Sun className="mr-2 h-4 w-4" />
-                    <span>Light</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setTheme("dark")}>
-                    <Moon className="mr-2 h-4 w-4" />
-                    <span>Dark</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setTheme("system")}>
-                    <Laptop className="mr-2 h-4 w-4" />
-                    <span>System</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
             </div>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       <main className="flex-grow">
-        <section className="bg-gradient-to-r from-pink-500 to-purple-600 py-20 text-white">
+        <motion.section
+          className="bg-gradient-to-r from-emerald-600 to-emerald-800 py-20 text-zinc-200"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <motion.h1
+              className="text-4xl md:text-5xl font-bold mb-6"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
               Track Prices. Save Money. Shop Smarter.
-            </h1>
-            <p className="text-xl mb-8">
+            </motion.h1>
+            <motion.p
+              className="text-xl mb-8"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+            >
               Monitor product prices across multiple e-commerce sites and get
               notified when prices drop.
-            </p>
-            <div className="max-w-2xl mx-auto">
+            </motion.p>
+            <motion.div
+              className="max-w-2xl mx-auto"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+            >
               <form className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-2">
                 <Input
-                  className="flex-grow bg-white/10 backdrop-blur-md text-white placeholder:text-white/70 border-white/20"
+                  className="flex-grow bg-zinc-700 text-zinc-200 placeholder-zinc-400 border-zinc-600 focus:border-emerald-400 focus:ring-emerald-400"
                   placeholder="Enter product URL to track"
                   type="url"
                 />
                 <Button
                   type="submit"
-                  className="bg-white text-pink-600 hover:bg-pink-100 transition-colors"
+                  className="bg-emerald-500 text-zinc-900 hover:bg-emerald-600 transition-colors"
                 >
                   Track Price
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </form>
-            </div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
 
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-8 text-black">
+            <h2 className="text-3xl font-bold text-center mb-8 text-zinc-200">
               Trending Products
             </h2>
             <div className="relative">
@@ -299,138 +314,176 @@ export default function HomePage() {
                 className="flex overflow-x-auto space-x-6 pb-4 scrollbar-hide"
               >
                 {[...Array(5)].map((_, i) => (
-                  <div key={i} className="flex-shrink-0 w-64">
-                    <Card className="overflow-hidden group">
+                  <motion.div
+                    key={i}
+                    className="flex-shrink-0 w-64"
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                  >
+                    <Card className="overflow-hidden group bg-zinc-800 border-zinc-700">
                       <CardContent className="p-4 relative">
-                        <div className="aspect-square bg-gray-200 rounded-md mb-4 relative overflow-hidden">
-                          <Image
+                        <div className="aspect-square bg-zinc-700 rounded-md mb-4 relative overflow-hidden">
+                          <img
                             src={`https://picsum.photos/seed/${i}/400/400`}
                             alt={`Product ${i + 1}`}
-                            width={400}
-                            height={400}
                             className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
                           />
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="absolute top-2 right-2 bg-white rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                            className="absolute top-2 right-2 bg-zinc-800 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                           >
-                            <Heart className="h-4 w-4 text-pink-500" />
+                            <Heart className="h-4 w-4 text-emerald-400" />
                           </Button>
                         </div>
-                        <h3 className="font-semibold mb-1">
+                        <h3 className="font-semibold mb-1 text-zinc-200">
                           Trending Product {i + 1}
                         </h3>
-                        <p className="text-sm text-gray-500 mb-2">Brand Name</p>
+                        <p className="text-sm text-zinc-400 mb-2">Brand Name</p>
                         <div className="flex items-center justify-between">
-                          <p className="text-lg font-bold text-pink-600">
+                          <p className="text-lg font-bold text-emerald-400">
                             ₹{(Math.random() * 10000).toFixed(2)}
                           </p>
-                          <p className="text-sm text-green-600">20% off</p>
+                          <p className="text-sm text-emerald-400">20% off</p>
                         </div>
                       </CardContent>
-                      <CardFooter className="p-4 bg-gray-50 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <Button variant="outline" size="sm">
+                      <CardFooter className="p-4 bg-zinc-700 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-zinc-200 border-zinc-600 hover:bg-zinc-600"
+                        >
                           View Details
                         </Button>
-                        <Button variant="ghost" size="sm">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-zinc-200 hover:text-emerald-400 hover:bg-zinc-600"
+                        >
                           <Bell className="h-4 w-4 mr-2" />
                           Set Alert
                         </Button>
                       </CardFooter>
                     </Card>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white shadow-md rounded-full hidden md:flex"
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-zinc-800 shadow-md rounded-full hidden md:flex"
                 onClick={() => scrollProducts("left")}
               >
-                <ChevronLeft className="h-6 w-6" />
+                <ChevronLeft className="h-6 w-6 text-zinc-200" />
               </Button>
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white shadow-md rounded-full hidden md:flex"
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-zinc-800 shadow-md rounded-full hidden md:flex"
                 onClick={() => scrollProducts("right")}
               >
-                <ChevronRight className="h-6 w-6" />
+                <ChevronRight className="h-6 w-6 text-zinc-200" />
               </Button>
             </div>
           </div>
         </section>
 
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-zinc-800">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-8 text-black">
+            <h2 className="text-3xl font-bold text-center mb-8 text-zinc-200">
               Your Tracked Products
             </h2>
             <Tabs defaultValue="all" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 max-w-md mx-auto mb-8">
-                <TabsTrigger value="all">All Products</TabsTrigger>
-                <TabsTrigger value="favorites">Favorites</TabsTrigger>
-                <TabsTrigger value="alerts">Price Alerts</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-3 max-w-md mx-auto mb-8 bg-zinc-700">
+                <TabsTrigger
+                  value="all"
+                  className="text-zinc-200 data-[state=active]:bg-emerald-500 data-[state=active]:text-zinc-900"
+                >
+                  All Products
+                </TabsTrigger>
+                <TabsTrigger
+                  value="favorites"
+                  className="text-zinc-200 data-[state=active]:bg-emerald-500 data-[state=active]:text-zinc-900"
+                >
+                  Favorites
+                </TabsTrigger>
+                <TabsTrigger
+                  value="alerts"
+                  className="text-zinc-200 data-[state=active]:bg-emerald-500 data-[state=active]:text-zinc-900"
+                >
+                  Price Alerts
+                </TabsTrigger>
               </TabsList>
               <TabsContent value="all">
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                   {[...Array(8)].map((_, i) => (
-                    <div key={i}>
-                      <Card className="overflow-hidden group">
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                    >
+                      <Card className="overflow-hidden group bg-zinc-700 border-zinc-600">
                         <CardContent className="p-4 relative">
-                          <div className="aspect-square bg-gray-200 rounded-md mb-4 relative overflow-hidden">
-                            <Image
+                          <div className="aspect-square bg-zinc-600 rounded-md mb-4 relative overflow-hidden">
+                            <img
                               src={`https://picsum.photos/seed/${
                                 i + 10
-                                }/400/400`}
-                              width={400}
-                              height={400}
+                              }/400/400`}
                               alt={`Product ${i + 1}`}
                               className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
                             />
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="absolute top-2 right-2 bg-white rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                              className="absolute top-2 right-2 bg-zinc-800 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                             >
-                              <Heart className="h-4 w-4 text-pink-500" />
+                              <Heart className="h-4 w-4 text-emerald-400" />
                             </Button>
                           </div>
-                          <h3 className="font-semibold mb-1">
+                          <h3 className="font-semibold mb-1 text-zinc-200">
                             Product Name {i + 1}
                           </h3>
-                          <p className="text-sm text-gray-500 mb-2">
+                          <p className="text-sm text-zinc-400 mb-2">
                             Brand Name
                           </p>
                           <div className="flex items-center justify-between">
-                            <p className="text-lg font-bold text-pink-600">
+                            <p className="text-lg font-bold text-emerald-400">
                               ₹{(Math.random() * 10000).toFixed(2)}
                             </p>
-                            <p className="text-sm text-green-600">10% off</p>
+                            <p className="text-sm text-emerald-400">10% off</p>
                           </div>
                         </CardContent>
-                        <CardFooter className="p-4 bg-gray-100 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <Button variant="outline" size="sm">
+                        <CardFooter className="p-4 bg-zinc-600 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-zinc-200 border-zinc-500 hover:bg-zinc-500"
+                          >
                             View History
                           </Button>
-                          <Button variant="ghost" size="sm">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-zinc-200 hover:text-emerald-400 hover:bg-zinc-500"
+                          >
                             <Bell className="h-4 w-4 mr-2" />
                             Set Alert
                           </Button>
                         </CardFooter>
                       </Card>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </TabsContent>
               <TabsContent value="favorites">
-                <div className="text-center text-gray-500">
+                <div className="text-center text-zinc-400">
                   Your favorite products will appear here.
                 </div>
               </TabsContent>
               <TabsContent value="alerts">
-                <div className="text-center text-gray-500">
+                <div className="text-center text-zinc-400">
                   Your price alerts will appear here.
                 </div>
               </TabsContent>
@@ -438,12 +491,12 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="py-16">
+        <section className="py-16 bg-zinc-900">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12 text-black">
+            <h2 className="text-3xl font-bold text-center mb-12 text-zinc-200">
               How It Works
             </h2>
-            <div className="grid gap-8 md:grid-cols-3 max-w-4xl mx-auto text-black">
+            <div className="grid gap-8 md:grid-cols-3 max-w-4xl mx-auto">
               {[
                 {
                   icon: Search,
@@ -455,7 +508,7 @@ export default function HomePage() {
                   icon: BarChart2,
                   title: "Monitor Prices",
                   description:
-                    "We'll keep an eye on the prices and track their changes over time.",
+                    "We will keep an eye on the prices and track their changes over time.",
                 },
                 {
                   icon: Bell,
@@ -464,36 +517,44 @@ export default function HomePage() {
                     "Receive instant notifications when prices drop or reach your desired level.",
                 },
               ].map((item, index) => (
-                <div
+                <motion.div
                   key={index}
                   className="flex flex-col items-center text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.2 }}
                 >
-                  <div
-                    className={`bg-${
-                      index === 0 ? "pink" : index === 1 ? "purple" : "blue"
-                    }-100 p-4 rounded-full mb-4`}
-                  >
-                    <item.icon
-                      className={`h-8 w-8 text-${
-                        index === 0 ? "pink" : index === 1 ? "purple" : "blue"
-                      }-600`}
-                    />
+                  <div className="bg-emerald-500 p-4 rounded-full mb-4">
+                    <item.icon className="h-8 w-8 text-zinc-900" />
                   </div>
-                  <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                  <p className="text-gray-600">{item.description}</p>
-                </div>
+                  <h3 className="text-xl font-bold mb-2 text-zinc-200">
+                    {item.title}
+                  </h3>
+                  <p className="text-zinc-400">{item.description}</p>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="dark:bg-zinc-800 dark:text-zinc-200 py-12 bg-gray-900 text-white">
         <div className="container mx-auto px-4 md:text-left text-center">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold mb-4">About PriceTracker</h3>
-              <p className="text-sm text-gray-400">
+            <div className="space-y-4">
+              <Link
+                className="flex items-center md:justify-start justify-center"
+                href="#"
+              >
+                <BarChart2
+                  className="h-8 w-8 text-blue-600 dark:text-emerald-400"
+                  aria-hidden="true"
+                />
+                <span className="ml-2 text-2xl font-bold text-white dark:text-zinc-200">
+                  PriceTracker
+                </span>
+              </Link>
+              <p className="text-sm dark:text-zinc-400 text-gray-400 md:mr-4">
                 PriceTracker helps you save money by tracking product prices
                 across multiple e-commerce platforms.
               </p>
@@ -503,7 +564,7 @@ export default function HomePage() {
               <ul className="space-y-2">
                 <li>
                   <Link
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     Home
@@ -511,7 +572,7 @@ export default function HomePage() {
                 </li>
                 <li>
                   <Link
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     How It Works
@@ -519,7 +580,7 @@ export default function HomePage() {
                 </li>
                 <li>
                   <Link
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     FAQs
@@ -527,7 +588,7 @@ export default function HomePage() {
                 </li>
                 <li>
                   <Link
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     Contact Us
@@ -540,7 +601,7 @@ export default function HomePage() {
               <ul className="space-y-2">
                 <li>
                   <Link
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     Privacy Policy
@@ -548,7 +609,7 @@ export default function HomePage() {
                 </li>
                 <li>
                   <Link
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                    className="text-sm dark:text-zinc-400 hover:text-blue-400  dark:hover:text-emerald-400 transition-colors"
                     href="/"
                   >
                     Terms of Service
@@ -561,7 +622,8 @@ export default function HomePage() {
               <div className="flex md:justify-start justify-center space-x-4">
                 <Link
                   href="/"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-blue-400 dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
+                  aria-label="Facebook"
                 >
                   <svg
                     className="h-6 w-6"
@@ -578,7 +640,8 @@ export default function HomePage() {
                 </Link>
                 <Link
                   href="#"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-blue-400 dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
+                  aria-label="Twitter"
                 >
                   <svg
                     className="h-6 w-6"
@@ -591,7 +654,8 @@ export default function HomePage() {
                 </Link>
                 <Link
                   href="#"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-blue-400 dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
+                  aria-label="Instagram"
                 >
                   <svg
                     className="h-6 w-6"
@@ -609,8 +673,8 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t border-gray-800 text-center">
-            <p className="text-sm text-gray-400">
+          <div className="mt-8 pt-8 border-t border-gray-800 dark:border-zinc-700 text-center">
+            <p className="text-sm dark:text-zinc-400 text-gray-400">
               © {new Date().getFullYear()} PriceTracker. All rights reserved.
             </p>
           </div>
@@ -619,10 +683,11 @@ export default function HomePage() {
 
       {showScrollTop && (
         <Button
-          className="fixed bottom-4 right-4 bg-pink-500 text-white rounded-full p-2 shadow-lg hover:bg-pink-600 transition-all duration-300"
+          className="fixed bottom-4 right-4 bg-blue-600 text-white dark:bg-emerald-500 dark:text-zinc-900 rounded-full p-2 shadow-lg dark:hover:bg-emerald-600 hover:bg-blue-700 transition-all duration-300 animate-bounce"
           onClick={scrollToTop}
+          aria-label="Scroll to top"
         >
-          <ArrowUp className="h-6 w-6" />
+          <ChevronUp className="h-6 w-6" aria-hidden="true" />
         </Button>
       )}
     </div>
